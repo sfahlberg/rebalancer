@@ -1,5 +1,14 @@
 require 'csv'
 
+def build_new_csvs(filename, blob)
+  CSV.open("data/tmp/#{filename}.csv", 'w') do |csv_object|
+    blob.each do |row|
+      next if row.empty?
+      csv_object << row
+    end
+  end
+end
+
 def run_blob(blob, identifier)
   p blob
   exit
@@ -21,7 +30,6 @@ def run_blob(blob, identifier)
   p funds
 end
 
-# run_blob('Fund Account Number')
 class String
   def is_letter?
     !self.match(/^[[:alpha:]]+$/).nil?
@@ -39,22 +47,9 @@ CSV.foreach('data/ofxdownload.csv') do |line|
 end
 blobs << current_blob
 
-# descriptor = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
-
-# blobs.each_with_index do |blob, i|
-#   run_blob(blob, descriptor[i])
-# end
-
-# run_blob(blobs[0], descriptor[0])
-my_blob = blobs[0]
-CSV.open('data/tmp/1.csv', 'w') do |csv_object|
-  my_blob.each do |row|
-    csv_object << row
-  end
+i = 0
+blobs.each do |blob|
+  build_new_csvs(i, blob) 
+  i += 1
 end
-# new_csv = CSV.open('data/tmp/1.csv')
-# new_csv.each do |line|
-#   line << my_blob.shift
-#   puts
-#   p my_blob
-# end
+# descriptor = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
