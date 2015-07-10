@@ -1,4 +1,5 @@
 require 'csv'
+require 'byebug'
 
 def build_new_csvs(filename, blob)
   CSV.open("data/tmp/#{filename}.csv", 'w') do |csv_object|
@@ -9,11 +10,11 @@ def build_new_csvs(filename, blob)
   end
 end
 
-def run_blob(blob, identifier)
-  p blob
-  exit
-  funds = {}
-  CSV.foreach('data/test.csv', headers: true) do |line|
+FUNDS = {}
+
+def run_blob(filename, identifier)
+  path = "data/tmp/#{filename}.csv"
+  CSV.foreach(path, headers: true) do |line|
     account = line[identifier]
     next if account == nil
     current_account = {}
@@ -25,9 +26,11 @@ def run_blob(blob, identifier)
       end
     end
 
-    funds[account] = current_account
+    FUNDS[account] ||= []
+    FUNDS[account] << current_account
   end
-  p funds
+
+  File.delete(path)
 end
 
 class String
@@ -36,20 +39,35 @@ class String
   end
 end
 
+BLOBS = []
+def check_if_trades(current_blob)
+  unless current_blob[0][1] == "Trade Date"
+    BLOBS << current_blob
+  end
+end
+
 current_blob = []
-blobs = []
 CSV.foreach('data/ofxdownload.csv') do |line|
   if line.length > 0 && line[0][0].is_letter? && current_blob.length > 0
-    blobs << current_blob
+    check_if_trades(current_blob)
     current_blob = []
   end
   current_blob << line
 end
-blobs << current_blob
+check_if_trades(current_blob)
 
 i = 0
-blobs.each do |blob|
-  build_new_csvs(i, blob) 
+BLOBS.each do |blob|
   i += 1
+  build_new_csvs(i, blob) 
 end
-# descriptor = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
+
+names = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
+(1..i).each do |idx|
+  run_blob(idx, names[idx - 1])
+end
+
+p FUNDS.keys
+
+
+# FUNDS = { 34 => [] }
