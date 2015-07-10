@@ -50,24 +50,26 @@ def add_account_type
   lines = []
   File.readlines('user_data/account_names.txt').each do |line|
     line = line.gsub!("\n","")
-    p line
     lines << line unless line.nil?
   end
 
-
+  portfolios = {}
   (0..lines.length - 2).step(2) do |i|
-
-   # p lines[i]
-    # p lines[i + 1]
-    # byebug
-    
     FUNDS[lines[i]].each do |investment| 
-      investment["tax type"] = lines[i + 1]
+      if investment["Fund Name"] == "Vanguard Prime Money Market Fund"
+        symbol = "MM"
+      else
+        symbol = investment["Symbol"]
+      end
+
+      tax_type = lines[i + 1]
+      portfolios[tax_type] ||= {}
+      portfolios[tax_type][symbol] = investment
     end
   end
-
   
-  FUNDS
+  portfolios
+  
 end
 
 def get_accounts
@@ -93,9 +95,4 @@ def get_accounts
   end
 
   add_account_type
-
-  p FUNDS
 end
-# FUNDS = { 34 => [] }
-
-get_accounts
