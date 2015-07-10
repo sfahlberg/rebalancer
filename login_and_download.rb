@@ -5,7 +5,7 @@ require 'fileutils'
 
 temp_arr = []
 i = 0
-File.readlines('info.txt').each do |line, idx|
+File.readlines('user_data/info.txt').each do |line, idx|
   temp_arr[i] = line.gsub!("\n","")
   i += 1
 end
