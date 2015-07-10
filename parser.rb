@@ -46,6 +46,30 @@ def check_if_trades(current_blob)
   end
 end
 
+def add_account_type
+  lines = []
+  File.readlines('user_data/account_names.txt').each do |line|
+    line = line.gsub!("\n","")
+    p line
+    lines << line unless line.nil?
+  end
+
+
+  (0..lines.length - 2).step(2) do |i|
+
+   # p lines[i]
+    # p lines[i + 1]
+    # byebug
+    
+    FUNDS[lines[i]].each do |investment| 
+      investment["tax type"] = lines[i + 1]
+    end
+  end
+
+  
+  FUNDS
+end
+
 def get_accounts
   current_blob = []
   CSV.foreach('data/ofxdownload.csv') do |line|
@@ -68,6 +92,10 @@ def get_accounts
     run_blob(idx, names[idx - 1])
   end
 
-  FUNDS
+  add_account_type
+
+  p FUNDS
 end
 # FUNDS = { 34 => [] }
+
+get_accounts
