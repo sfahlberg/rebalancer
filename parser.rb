@@ -46,28 +46,28 @@ def check_if_trades(current_blob)
   end
 end
 
-current_blob = []
-CSV.foreach('data/ofxdownload.csv') do |line|
-  if line.length > 0 && line[0][0].is_letter? && current_blob.length > 0
-    check_if_trades(current_blob)
-    current_blob = []
+def get_accounts
+  current_blob = []
+  CSV.foreach('data/ofxdownload.csv') do |line|
+    if line.length > 0 && line[0][0].is_letter? && current_blob.length > 0
+      check_if_trades(current_blob)
+      current_blob = []
+    end
+    current_blob << line
   end
-  current_blob << line
+  check_if_trades(current_blob)
+
+  i = 0
+  BLOBS.each do |blob|
+    i += 1
+    build_new_csvs(i, blob) 
+  end
+
+  names = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
+  (1..i).each do |idx|
+    run_blob(idx, names[idx - 1])
+  end
+
+  FUNDS
 end
-check_if_trades(current_blob)
-
-i = 0
-BLOBS.each do |blob|
-  i += 1
-  build_new_csvs(i, blob) 
-end
-
-names = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
-(1..i).each do |idx|
-  run_blob(idx, names[idx - 1])
-end
-
-p FUNDS.keys
-
-
 # FUNDS = { 34 => [] }
