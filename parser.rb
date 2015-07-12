@@ -1,5 +1,4 @@
 require 'csv'
-require 'byebug'
 
 def build_new_csvs(filename, blob)
   CSV.open("data/tmp/#{filename}.csv", 'w') do |csv_object|
@@ -57,10 +56,17 @@ def add_account_type
   (0..lines.length - 2).step(2) do |i|
     FUNDS[lines[i]].each do |investment| 
       if investment["Fund Name"] == "Vanguard Prime Money Market Fund"
-        symbol = "MM"
+        symbol = "MMA"
+        investment["Share Price"] = 1
       else
         symbol = investment["Symbol"]
       end
+
+      #convert str into num
+      investment["Shares"] = investment["Shares"].to_f
+      investment["Total Value"] = investment["Total Value"].to_f
+      investment["Share Price"] = investment["Share Price"].to_f
+
 
       tax_type = lines[i + 1]
       portfolios[tax_type] ||= {}
@@ -69,7 +75,6 @@ def add_account_type
   end
   
   portfolios
-  
 end
 
 def get_accounts

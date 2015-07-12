@@ -1,6 +1,7 @@
 account_names.txt
 info.txt
 data/
+user_data/
 *.swp
 *.swo
 *.swn
