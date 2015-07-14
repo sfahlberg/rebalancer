@@ -8,4 +8,4 @@ require 'byebug'
 # crunch_numbers(accounts)
 #
 my_vanguard_account = Vanguard.new
-p my_vanguard_account.portfolios
+p my_vanguard_account

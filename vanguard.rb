@@ -5,6 +5,7 @@ class Vanguard
   attr_reader :portfolios
 
   def initialize
+    Portfolio.get_investments
     @portfolios = get_portfolios
   end
 
