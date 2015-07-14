@@ -10,7 +10,6 @@ end
 def get_desired_portfolio
   investments = {}
   CSV.foreach('user_data/desired_portfolio.txt', headers: true) do |line|
-    # investments[line]
     investments[line["Symbol"]] = line["Percent"]
   end 
   investments 
