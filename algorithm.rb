@@ -1,18 +1,11 @@
 require 'byebug'
+include Parser
 def crunch_numbers(accounts)
   current_portfolio = accounts['traditional']
   desired_portfolio = get_desired_portfolio
 
   changes = get_changes(current_portfolio, desired_portfolio)
   p changes
-end
-
-def get_desired_portfolio
-  investments = {}
-  CSV.foreach('user_data/desired_portfolio.txt', headers: true) do |line|
-    investments[line["Symbol"]] = line["Percent"]
-  end 
-  investments 
 end
 
 def get_changes(current, desired)
