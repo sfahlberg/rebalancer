@@ -4,6 +4,7 @@ class VanguardData
 
   def initialize(path)
     @path_to_csv = path
+    @funds = {}
   end
 
 
@@ -20,8 +21,6 @@ class VanguardData
     end
   end
 
-  FUNDS = {}
-
   def run_blob(filename, identifier)
     path = "data/tmp/#{filename}.csv"
     CSV.foreach(path, headers: true) do |line|
@@ -36,14 +35,14 @@ class VanguardData
         end
       end
 
-      FUNDS[account] ||= []
-      FUNDS[account] << current_account
+      @funds[account] << current_account
     end
 
     File.delete(path)
   end
 
 
+  # TODO: make this an instance variable
   BLOBS = []
   def check_if_trades(current_blob)
     unless current_blob[0][1] == "Trade Date"
@@ -66,17 +65,15 @@ class VanguardData
   def get_accounts
     parse_downloaded_csv
 
-    i = 0
-    BLOBS.each do |blob|
-      i += 1
+    BLOBS.each_with_index do |blob, i|
       build_new_csvs(i, blob) 
     end
 
     names = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
 
-    (1..i).each do |idx|
-      run_blob(idx, names[idx - 1])
+    (0..BLOBS.length).each do |idx|
+      run_blob(idx, names[idx])
     end
-    FUNDS
+    @funds
   end
 end
