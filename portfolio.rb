@@ -7,6 +7,9 @@ class Portfolio
     @account_numbers = account_numbers
     @investments = []
     @portfolio_total_value = 0
+    @diff_for_action = 5
+    @buy = false
+    @sell = false
     get_investment_for_this_portfolio
   end
 
@@ -30,6 +33,20 @@ class Portfolio
 
       @portfolio_total_value += total_value.to_f
       @investments << new_investment
+    end
+  end
+  
+  def determine_buy_or_sell
+    @investments.each do |inv|
+      diff = inv.current_percentage - inv.desired_percentage
+
+      if diff > diff_for_action
+        @sell = true
+      end
+
+      if !@sell && diff < -diff_for_action
+        @buy
+      end
     end
   end
 end

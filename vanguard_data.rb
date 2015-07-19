@@ -1,43 +1,11 @@
 require 'csv'
-module Parser
-  def get_desired_portfolios
-    portfolios = {}
-    CSV.foreach('user_data/desired_portfolio.txt', headers: true) do |line|
-      current_portfolio = line["Portfolio"]
-      current_investment = line["Symbol"]
-      
-      unless portfolios[current_portfolio]
-        portfolios[current_portfolio] = {}
-      end
+class VanguardData
+  attr_reader :path_to_csv
 
-      unless portfolios[current_portfolio][current_investment]
-        portfolios[current_portfolio][current_investment] = {}
-      end
-     
-      portfolios[current_portfolio][current_investment] = line["Percent"].to_f
-    end 
-    portfolios
+  def initialize(path)
+    @path_to_csv = path
   end
 
-  def desired_portfolios
-    @@desired_portfolios ||= get_desired_portfolios
-  end
-  
-  def get_portfolios 
-    portfolios = []
-    CSV.foreach('user_data/portfolio_names.txt', headers: true) do |line|
-      name = line['Portfolio Name']
-      accounts = {}
-
-      (1...line.length).each do |i| 
-        account_num = line["Account Number #{i}"]
-        accounts[account_num] = true
-      end
-
-      portfolios << Portfolio.new(name, accounts)
-    end
-    portfolios
-  end
 
   def get_investments
     @@accounts = get_accounts
@@ -85,7 +53,7 @@ module Parser
 
   def parse_downloaded_csv
     current_blob = []
-    CSV.foreach('data/ofxdownload.csv') do |line|
+    CSV.foreach('') do |line|
       if line.length > 0 && line[0][0].is_letter? && current_blob.length > 0
         check_if_trades(current_blob)
         current_blob = []
