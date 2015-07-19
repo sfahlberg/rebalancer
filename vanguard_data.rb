@@ -1,15 +1,18 @@
 require 'csv'
+require_relative 'helpers'
 class VanguardData
   attr_reader :path_to_csv
+  attr_accessor :funds, :accounts
 
   def initialize(path)
     @path_to_csv = path
     @funds = {}
+    @accounts
   end
 
 
   def get_investments
-    @@accounts = get_accounts
+    @accounts = get_accounts
   end
 
   def build_new_csvs(filename, blob)
@@ -35,6 +38,7 @@ class VanguardData
         end
       end
 
+      @funds[account] ||= []
       @funds[account] << current_account
     end
 
@@ -52,7 +56,7 @@ class VanguardData
 
   def parse_downloaded_csv
     current_blob = []
-    CSV.foreach('') do |line|
+    CSV.foreach(@path_to_csv) do |line|
       if line.length > 0 && line[0][0].is_letter? && current_blob.length > 0
         check_if_trades(current_blob)
         current_blob = []
