@@ -12,34 +12,39 @@ class VanguardData
     @sections = []
   end
 
-  def build_helper_csv(filename, section)
-    CSV.open("data/tmp/#{filename}.csv", 'w') do |csv_object|
-      section.each do |row|
-        next if row.empty?
-        csv_object << row
+  def build_helper_csv
+    @sections.each_with_index do |section, idx|
+      CSV.open("data/tmp/#{idx}.csv", 'w') do |csv_object|
+        section.each do |row|
+          next if row.empty?
+          csv_object << row
+        end
       end
     end
   end
 
-  def parse_helper_csv(filename, identifier)
-    path = "data/tmp/#{filename}.csv"
-    CSV.foreach(path, headers: true) do |line|
-      account = line[identifier]
-      next if account == nil
-      current_account = {}
+  def parse_helper_csv
+    @sections.each_index do |idx|
+      path = "data/tmp/#{idx}.csv"
 
-      line.headers.each_with_index do |header, i|
-        next if header == nil
-        unless identifier == header
-          current_account[header] = line[i]
+      CSV.foreach(path, headers: true) do |line|
+        account = line[identifier]
+        next if account == nil
+        current_account = {}
+
+        line.headers.each_with_index do |header, i|
+          next if header == nil
+          unless identifier == header
+            current_account[header] = line[i]
+          end
         end
+
+        @funds[account] ||= []
+        @funds[account] << current_account
       end
 
-      @funds[account] ||= []
-      @funds[account] << current_account
+      File.delete(path)
     end
-
-    File.delete(path)
   end
 
   def parse_downloaded_csv
@@ -72,10 +77,8 @@ class VanguardData
     parse_downloaded_csv
     remove_trade_data
 
-    @sections.each_with_index do |section, idx|
-      build_helper_csv(idx, section) 
-      parse_helper_csv(idx, @names[idx])
-    end
+    build_helper_csv 
+    parse_helper_csv
 
     @funds
   end

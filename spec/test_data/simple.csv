@@ -1,0 +1,11 @@
+Fund Account Number,Fund Name,Price,Shares,Total Value,
+
+0030-11111111111,Vanguard Prime Money Market Fund,1.00,130.680,130.68,
+
+
+Account Number,Trade Date,Process Date,Transaction Type,Transaction Description,Investment Name,Share Price,Shares,Gross Amount,Net Amount,
+22222222222,07/02/2015,07/02/2015,Buy,NET SWEEP FROM BROKERAGE,Prime Money Mkt Fund,1.0,59.44,59.44,59.44,
+
+
+Account Number,Investment Name,Symbol,Shares,Share Price,Total Value,
+44444444,VANGUARD TOTAL INTL STOCK INDEX FUND ETF,VXUS,60.4,49.63,2997.65,
