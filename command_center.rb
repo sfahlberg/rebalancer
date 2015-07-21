@@ -6,8 +6,7 @@ require 'rubygems'
 require 'byebug'
 
 vdata = VanguardData.new('data/ofxdownload.csv')
-p Dir.pwd
-# p vdata.get_investments
+p vdata.get_accounts
 # my_vanguard_account = Vanguard.new
 #
 # my_vanguard_account.portfolios.each do |portfolio|

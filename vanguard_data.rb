@@ -1,30 +1,27 @@
 require 'csv'
 require_relative 'helpers'
+
 class VanguardData
-  attr_reader :path_to_csv
-  attr_accessor :funds, :accounts
+  attr_reader :path_to_csv, :sections
+  attr_accessor :funds
 
   def initialize(path)
     @path_to_csv = path
     @funds = {}
-    @accounts
+    @names = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
+    @sections = []
   end
 
-
-  def get_investments
-    @accounts = get_accounts
-  end
-
-  def build_new_csvs(filename, blob)
+  def build_helper_csv(filename, section)
     CSV.open("data/tmp/#{filename}.csv", 'w') do |csv_object|
-      blob.each do |row|
+      section.each do |row|
         next if row.empty?
         csv_object << row
       end
     end
   end
 
-  def run_blob(filename, identifier)
+  def parse_helper_csv(filename, identifier)
     path = "data/tmp/#{filename}.csv"
     CSV.foreach(path, headers: true) do |line|
       account = line[identifier]
@@ -45,39 +42,41 @@ class VanguardData
     File.delete(path)
   end
 
+  def parse_downloaded_csv
+    current_section = []
+    
+    CSV.foreach(@path_to_csv) do |line|
 
-  # TODO: make this an instance variable
-  BLOBS = []
-  def check_if_trades(current_blob)
-    unless current_blob[0][1] == "Trade Date"
-      BLOBS << current_blob
+      if line.length > 0 && line[0][0].is_letter? && !current_section.empty?
+        @sections << current_section
+        current_section = []
+      end
+      
+      current_section << line
     end
+
+    @sections << current_section
   end
 
-  def parse_downloaded_csv
-    current_blob = []
-    CSV.foreach(@path_to_csv) do |line|
-      if line.length > 0 && line[0][0].is_letter? && current_blob.length > 0
-        check_if_trades(current_blob)
-        current_blob = []
+  def remove_trade_data
+    cleaned_sections = []
+    @sections.each do |section|
+      if section[0][1] != "Trade Date"
+        cleaned_sections << section
       end
-      current_blob << line
     end
-    check_if_trades(current_blob)
+    @sections = cleaned_sections
   end
 
   def get_accounts
     parse_downloaded_csv
+    remove_trade_data
 
-    BLOBS.each_with_index do |blob, i|
-      build_new_csvs(i, blob) 
+    @sections.each_with_index do |section, idx|
+      build_helper_csv(idx, section) 
+      parse_helper_csv(idx, @names[idx])
     end
 
-    names = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
-
-    (0..BLOBS.length).each do |idx|
-      run_blob(idx, names[idx])
-    end
     @funds
   end
 end
