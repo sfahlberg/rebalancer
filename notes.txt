@@ -1,0 +1,15 @@
+Vanguard
+-portfolios
+
+Portfolio
+-investments
+
+Investments
+-price
+-shares
+
+Vanguard_CSV
+-populates investments
+
+User_CSV
+-populates Vanguard with portfolios

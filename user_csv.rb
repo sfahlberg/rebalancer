@@ -1,7 +1,8 @@
 require 'csv'
-class UserData
+require_relative 'portfolio'
+class UserCSV
   def initialize(file)
-    @path_to_csv
+    @path_to_csv = file
   end
   
   def get_desired_portfolios
@@ -27,12 +28,13 @@ class UserData
     @@desired_portfolios ||= get_desired_portfolios
   end
 
-  def get_portfolios 
+  def get_portfolios(investments) 
     portfolios = []
     CSV.foreach('user_data/portfolio_names.txt', headers: true) do |line|
       name = line['Portfolio Name']
       accounts = {}
 
+      # grab the different account numbers in CSV
       (1...line.length).each do |i| 
         account_num = line["Account Number #{i}"]
         accounts[account_num] = true

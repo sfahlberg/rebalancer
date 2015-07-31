@@ -1,12 +1,22 @@
 # require_relative 'login_and_download'
-require_relative 'vanguard_data'
+require_relative 'vanguard_csv'
+require_relative 'user_csv'
 # require_relative 'algorithm'
 # require_relative 'vanguard'
 require 'rubygems'
 require 'byebug'
 
-vdata = VanguardData.new('data/ofxdownload.csv')
-p vdata.get_accounts
+# vanguard_csv = VanguardCSV.new('data/','ofxdownload.csv')
+# vanguard_csv.get_accounts
+# investments = vanguard_csv.get_investments
+# p investments
+
+user_csv = UserCSV.new('user_data')
+portfolios = user_csv.get_portfolios
+p portfolios
+#  Vanguard.new(portfolios)
+
+
 # my_vanguard_account = Vanguard.new
 #
 # my_vanguard_account.portfolios.each do |portfolio|

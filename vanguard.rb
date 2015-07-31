@@ -5,8 +5,7 @@ class Vanguard
   require_relative 'portfolio'
   attr_reader :portfolios
 
-  def initialize
-    Portfolio.get_investments
-    @portfolios = get_portfolios
+  def initialize(portfolios)
+    @portfolios = portfolios
   end
 end

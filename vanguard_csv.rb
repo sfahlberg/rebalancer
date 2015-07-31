@@ -1,16 +1,18 @@
 require 'csv'
 require_relative 'helpers'
+require_relative 'investment'
 
-class VanguardData
-  attr_reader :path_to_csv, :sections
+class VanguardCSV
+  attr_reader :path_to_csv, :sections, :investments
   attr_accessor :funds
 
   def initialize(path, filename)
     @path_to_data = path
     @filename = filename
-    @funds = {}
     @names = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
     @sections = []
+    @funds = {}
+    @investments = []
   end
 
   def get_accounts
@@ -21,6 +23,25 @@ class VanguardData
     parse_helper_csvs
   end
 
+  def get_investments
+    investments = []
+    @funds.each_key do |account_number|
+      investments << @funds[account_number]
+    end
+
+    investments.flatten!
+    investments.each do |investment|
+      name = investment["Investment Name"] || investment["Fund Name"]
+      symbol = investment["Symbol"]
+      shares = investment["Shares"]
+      share_price = investment["Share Price"]
+      total_value = investment["Total Value"]
+      new_investment = Investment.new(name, symbol, shares, share_price, total_value)
+      @investments << new_investment
+    end
+    @investments
+  end
+  
   private
   def build_helper_csvs(dir = 'tmp/')
     @sections.each_with_index do |section, idx|
