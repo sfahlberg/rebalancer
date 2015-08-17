@@ -1,0 +1,4 @@
+Portfolio,Symbol,Percent
+traditional,VTV,33
+traditional,VTI,33
+traditional,VNQ,34

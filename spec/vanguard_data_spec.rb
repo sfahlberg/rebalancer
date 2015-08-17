@@ -72,14 +72,18 @@ RSpec.describe VanguardCSV do
   context '#get_investments' do
     it 'creates investments' do
       current_data = VanguardCSV.new('spec/test_data/', 'simple.csv')
-      current_data.instance_eval('@funds={3=>{"Symbol"=>"a","Shares"=>3,"Share Price"=>10,"Total Value"=>30,"Investment Name"=>"X"}}')
+      current_data.instance_eval('@funds={3=>[{"Symbol"=>"a","Shares"=>3,"Share Price"=>10,"Total Value"=>30,"Investment Name"=>"A"}]}')
       current_data.get_investments
+      investment = current_data.investments[0]
 
-      expect(current_data.investments[0].symbol).to eq("a")
-      expect(current_data.investments[0].shares).to eq(3)
-      expect(current_data.investments[0].share_price).to eq(10)
-      expect(current_data.investments[0].total_value).to eq(30)
-      expect(current_data.investments[0].name).to eq("X")
+      output = Investment.new("A", "a", 3, 10, 30, 3)
+
+      expect(investment.name).to eq(output.name)
+      expect(investment.symbol).to eq(output.symbol)
+      expect(investment.share_price).to eq(output.share_price)
+      expect(investment.total_value).to eq(output.total_value)
+      expect(investment.shares).to eq(output.shares)
+      expect(investment.account_number).to eq(output.account_number)
     end
   end
 end

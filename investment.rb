@@ -1,8 +1,8 @@
 require 'byebug'
 class Investment
-  attr_accessor :name, :symbol, :shares, :share_price, :total_value, :portfolio, :current_percentage, :desired_percentage, :desired_value
+  attr_accessor :name, :symbol, :shares, :share_price, :total_value, :account_number, :current_percentage, :desired_percentage, :desired_value
 
-  def initialize(name, symbol, shares, share_price, total_value)
+  def initialize(name, symbol, shares, share_price, total_value, account_number)
     @name = name
     @symbol = symbol
     @shares = shares
@@ -11,7 +11,7 @@ class Investment
     @desired_value = 0
     @current_percentage = 0
     @desired_percentage = 0
-    @portfolio = ""
+    @account_number = account_number
   end
 
   # def fix_data

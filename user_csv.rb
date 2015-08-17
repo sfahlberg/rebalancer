@@ -1,13 +1,15 @@
 require 'csv'
 require_relative 'portfolio'
 class UserCSV
-  def initialize(file)
-    @path_to_csv = file
+  attr_reader :path
+
+  def initialize(path)
+    @path = path 
   end
   
   def get_desired_portfolios
     portfolios = {}
-    CSV.foreach('user_data/desired_portfolio.txt', headers: true) do |line|
+    CSV.foreach(@path + 'desired_portfolio.txt', headers: true) do |line|
       current_portfolio = line["Portfolio"]
       current_investment = line["Symbol"]
       
@@ -30,7 +32,7 @@ class UserCSV
 
   def get_portfolios(investments) 
     portfolios = []
-    CSV.foreach('user_data/portfolio_names.txt', headers: true) do |line|
+    CSV.foreach(@path + 'portfolio_names.txt', headers: true) do |line|
       name = line['Portfolio Name']
       accounts = {}
 
@@ -40,7 +42,15 @@ class UserCSV
         accounts[account_num] = true
       end
 
-      portfolios << Portfolio.new(name, accounts)
+      # only use portfolios accounts
+      current_investments = []
+      investments.each do |investment|
+        if accounts[investment.account_number]
+          current_investments << investment
+        end
+      end
+
+      portfolios << Portfolio.new(name, accounts, current_investments)
     end
     portfolios
   end

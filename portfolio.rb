@@ -1,11 +1,11 @@
 require_relative 'investment'
 
 class Portfolio
-  attr_reader :portfolio_total_value, :name, :investments
-  def initialize(name, account_numbers)
+  attr_reader :portfolio_total_value, :name, :investments, :account_numbers
+  def initialize(name, account_numbers, investments)
     @name = name
     @account_numbers = account_numbers
-    @investments = []
+    @investments = investments
     @portfolio_total_value = 0
     @diff_for_action = 5
     @buy = false
