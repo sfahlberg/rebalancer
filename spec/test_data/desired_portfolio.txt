@@ -1,4 +1,4 @@
 Portfolio,Symbol,Percent
-traditional,VTV,33
-traditional,VTI,33
-traditional,VNQ,34
+traditional,a,33
+traditional,b,33
+traditional,c,34

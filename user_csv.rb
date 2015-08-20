@@ -1,10 +1,26 @@
 require 'csv'
 require_relative 'portfolio'
 class UserCSV
-  attr_reader :path
+  attr_reader :path, :desired_portfolios
 
   def initialize(path)
     @path = path 
+  end
+
+  def get_portfolios(investments)
+    portfolios = self.create_portfolios(investments)
+    desired_portfolios = self.get_desired_portfolios
+    portfolios.each do |portfolio|
+      current_desired_portfolio = desired_portfolios[portfolio.name]
+
+      if current_desired_portfolio
+        portfolio.investments.each do |investment|
+          desired_percentage = current_desired_portfolio[investment.symbol]
+          investment.desired_percentage = desired_percentage
+        end
+      end
+    end
+    portfolios
   end
   
   def get_desired_portfolios
@@ -26,11 +42,7 @@ class UserCSV
     portfolios
   end
 
-  def desired_portfolios
-    @@desired_portfolios ||= get_desired_portfolios
-  end
-
-  def get_portfolios(investments) 
+  def create_portfolios(investments) 
     portfolios = []
     CSV.foreach(@path + 'portfolio_names.txt', headers: true) do |line|
       name = line['Portfolio Name']
