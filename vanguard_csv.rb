@@ -24,7 +24,6 @@ class VanguardCSV
   end
 
   def get_investments
-    investments = []
     @funds.each_key do |account_number|
       current_investments = @funds[account_number]
 
@@ -32,9 +31,10 @@ class VanguardCSV
         portfolio = account_number
         name = investment["Investment Name"] || investment["Fund Name"]
         symbol = investment["Symbol"]
-        shares = investment["Shares"]
+        shares = investment["Shares"].to_f
         share_price = investment["Share Price"]
-        total_value = investment["Total Value"]
+        total_value = investment["Total Value"].to_f
+        p shares
         new_investment = Investment.new(name, symbol, shares, share_price, total_value, portfolio)
         @investments << new_investment
       end

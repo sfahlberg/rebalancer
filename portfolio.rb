@@ -12,6 +12,12 @@ class Portfolio
     @sell = false
   end
 
+  def calculate_portfolio_total_value
+    @investments.each do |investment|
+      @portfolio_total_value += investment.total_value
+    end
+  end
+
   def determine_buy_or_sell
     @investments.each do |inv|
       diff = inv.current_percentage - inv.desired_percentage

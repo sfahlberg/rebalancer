@@ -16,7 +16,7 @@ vanguard =  Vanguard.new(portfolios)
 vanguard.portfolios.each do |portfolio|
   if portfolio.name == 'traditional'
     portfolio.investments.each do |investment|
-      # investment.calculate_desired_percentage
+      investment.complete_data
       p "#{investment.symbol} : #{investment.current_percentage} : #{investment.desired_percentage}"
     end
   end

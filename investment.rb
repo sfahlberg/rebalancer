@@ -40,7 +40,7 @@ class Investment
   end
   
   def calculate_current_percentage
-    @current_percentage = @total_value.to_f / @portfolio.portfolio_total_value.to_f * 100
+    @current_percentage = @total_value / @portfolio.portfolio_total_value.to_f * 100
   end
 
   def calculate_desired_value
