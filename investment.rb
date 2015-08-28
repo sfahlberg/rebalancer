@@ -1,6 +1,6 @@
 require 'byebug'
 class Investment
-  attr_accessor :name, :symbol, :shares, :share_price, :total_value, :account_number, :current_percentage, :desired_percentage, :desired_value
+  attr_accessor :name, :symbol, :shares, :share_price, :total_value, :account_number, :current_percentage, :desired_percentage, :desired_value, :portfolio
 
   def initialize(name, symbol, shares, share_price, total_value, account_number)
     @name = name
@@ -12,7 +12,17 @@ class Investment
     @current_percentage = 0
     @desired_percentage = 0
     @account_number = account_number
+    @portfolio = nil
   end
+
+  def complete_data
+    symbolize_mma
+    calculate_share_price
+    calculate_current_percentage
+    calculate_desired_value
+  end
+
+  private
 
   def symbolize_mma
     if @symbol.nil? && @name == "Vanguard Prime Money Market Fund"
@@ -28,24 +38,9 @@ class Investment
       @share_price = @share_price.to_f
     end
   end
-
-  # def fix_data
-  #   @shares = shares.to_f
-  #   @total_value = @total_value.to_f
-  #
-  #
-  # end
   
-  # def calculate_desired_percentage
-  #   portfolio_name = self.portfolio.name
-  #   desired_portfolios = Parser.desired_portfolios
-  #   if desired_portfolios[portfolio_name] && desired_portfolios[portfolio_name][@symbol]
-  #     @desired_percentage = desired_portfolios[portfolio_name][@symbol]
-  #   end
-  # end
-
   def calculate_current_percentage
-    @current_percentage = @total_value / @portfolio.portfolio_total_value * 100
+    @current_percentage = @total_value.to_f / @portfolio.portfolio_total_value.to_f * 100
   end
 
   def calculate_desired_value

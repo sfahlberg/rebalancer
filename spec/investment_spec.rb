@@ -20,11 +20,32 @@ RSpec.describe Investment do
     end
   end
 
+  describe '#complete_data' do
+    context "with valid input data" do
+      it "returns expected output" do
+        portfolio = Portfolio.new("X",[],[])
+        portfolio.instance_eval('@portfolio_total_value=120')
+        investment = Investment.new("A","a",3,5,24,23)
+        investment.instance_eval('@portfolio=portfolio')
+
+        expect(investment).to receive(:symbolize_mma)
+        expect(investment).to receive(:calculate_share_price)
+        expect(investment).to receive(:calculate_current_percentage)
+        expect(investment).to receive(:calculate_desired_value)
+
+        investment.complete_data
+      end
+    end
+
+    context "with invalid input data" do
+      it "throws an error"
+    end
+  end
   describe '#symbolize_mma' do
     context "with valid input data" do
       it "takes MMA and makes symbol MMA" do
         inv = Investment.new('Vanguard Prime Money Market Fund', nil, 1, 1, 1, 11) 
-        inv.symbolize_mma
+        inv.send(:symbolize_mma)
         expect(inv.symbol).to eq("MMA")
       end
     end
@@ -38,35 +59,20 @@ RSpec.describe Investment do
     context "with valid input data" do
       it "calculates share price if nil" do
         inv = Investment.new('A', 'a', 3, nil, 12, 11) 
-        inv.calculate_share_price
+        inv.send(:calculate_share_price)
         expect(inv.share_price).to equal(4.0)
       end
 
       it "calculates share price if incorrect" do
         inv = Investment.new('A', 'a', 3, 5, 12, 11) 
-        inv.calculate_share_price
+        inv.send(:calculate_share_price)
         expect(inv.share_price).to equal(4.0)
       end
       
       it "calculates float share price" do
         inv = Investment.new('A', 'a', 3, 4, 12, 11) 
-        inv.calculate_share_price
+        inv.send(:calculate_share_price)
         expect(inv.share_price).to equal(4.0)
-      end
-    end
-
-    context "with invalid input data" do
-      it "throws an error"
-    end
-  end
-
-  describe '#calculate_desired_percentage' do
-    context "with valid input data" do
-      it "calculates the percentage desired" do
-        # portfolio = Portfolio.new('test_name',[],[])
-        # inv = Investment.new()
-        #
-        # expect(inv.desired_percentage).to eq(35)
       end
     end
 
@@ -77,7 +83,14 @@ RSpec.describe Investment do
 
   describe '#calculate_current_percentage' do
     context "with valid input data" do
-      it "does something" 
+      it "calculates the current percentage" do
+        portfolio = Portfolio.new("X",[],[])
+        portfolio.instance_eval('@portfolio_total_value=120')
+        investment = Investment.new("A","a",3,5,24,23)
+        investment.instance_eval('@portfolio=portfolio')
+        investment.send(:calculate_current_percentage)
+        expect(investment.current_percentage).to eq(20.0)
+      end
     end
 
     context "with invalid input data" do
@@ -87,7 +100,15 @@ RSpec.describe Investment do
 
   describe '#calculate_desired_value' do
     context "with valid input data" do
-      it "does something" 
+      it "does something" do
+        portfolio = Portfolio.new("X",[],[])
+        portfolio.instance_eval('@portfolio_total_value=120')
+        investment = Investment.new("A","a",3,5,24,23)
+        investment.instance_eval('@portfolio=portfolio')
+        investment.instance_eval('@desired_percentage=25')
+        investment.send(:calculate_desired_value)
+        expect(investment.desired_value).to eq(30)
+      end
     end
 
     context "with invalid input data" do
