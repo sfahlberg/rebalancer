@@ -34,7 +34,6 @@ class VanguardCSV
         shares = investment["Shares"].to_f
         share_price = investment["Share Price"]
         total_value = investment["Total Value"].to_f
-        p shares
         new_investment = Investment.new(name, symbol, shares, share_price, total_value, portfolio)
         @investments << new_investment
       end

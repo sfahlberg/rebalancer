@@ -15,9 +15,11 @@ vanguard =  Vanguard.new(portfolios)
 
 vanguard.portfolios.each do |portfolio|
   if portfolio.name == 'traditional'
+    portfolio.calculate_portfolio_total_value
     portfolio.investments.each do |investment|
       investment.complete_data
-      p "#{investment.symbol} : #{investment.current_percentage} : #{investment.desired_percentage}"
+      # p "#{investment.symbol} : #{investment.current_percentage} : #{investment.desired_percentage}"
+      p "#{investment.symbol} : #{investment.total_value} : #{investment.desired_value}"
     end
   end
 end

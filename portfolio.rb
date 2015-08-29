@@ -1,7 +1,9 @@
 require_relative 'investment'
 
 class Portfolio
-  attr_reader :portfolio_total_value, :name, :investments, :account_numbers
+  attr_reader :name, :investments, :account_numbers
+  attr_accessor :portfolio_total_value
+
   def initialize(name, account_numbers, investments)
     @name = name
     @account_numbers = account_numbers
@@ -18,17 +20,17 @@ class Portfolio
     end
   end
 
-  def determine_buy_or_sell
-    @investments.each do |inv|
-      diff = inv.current_percentage - inv.desired_percentage
-
-      if diff > diff_for_action
-        @sell = true
-      end
-
-      if !@sell && diff < -diff_for_action
-        @buy
-      end
-    end
-  end
+  # def determine_buy_or_sell
+  #   @investments.each do |inv|
+  #     diff = inv.current_percentage - inv.desired_percentage
+  #
+  #     if diff > diff_for_action
+  #       @sell = true
+  #     end
+  #
+  #     if !@sell && diff < -diff_for_action
+  #       @buy
+  #     end
+  #   end
+  # end
 end

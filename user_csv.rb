@@ -16,7 +16,7 @@ class UserCSV
       if current_desired_portfolio
         portfolio.investments.each do |investment|
           desired_percentage = current_desired_portfolio[investment.symbol]
-          investment.desired_percentage = desired_percentage
+          investment.desired_percentage = desired_percentage || 0
         end
       end
     end
@@ -62,7 +62,14 @@ class UserCSV
         end
       end
 
-      portfolios << Portfolio.new(name, accounts, current_investments)
+      current_portfolio = Portfolio.new(name, accounts, current_investments)
+
+      #set portfolio of investment equal to current_portfolio
+      current_portfolio.investments.each do |inv|
+        inv.portfolio = current_portfolio
+      end
+
+      portfolios << current_portfolio
     end
     portfolios
   end
