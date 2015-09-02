@@ -21,13 +21,15 @@ vanguard.portfolios.each do |portfolio|
       # p "#{investment.symbol} : #{investment.current_percentage} : #{investment.desired_percentage}"
       p "#{investment.symbol} : #{investment.total_value} : #{investment.desired_value}"
     end
+
+    portfolio.calculate_portfolio_total_value
+    portfolio.determine_buy_or_sell
+    p "sell" if  portfolio.sell
+    p "buy" if portfolio.buy
+
+    portfolio.amount_to_buy_or_sell
+    portfolio.investments.each do |inv|
+      p inv.change_shares
+    end
   end
 end
-
-# my_vanguard_account.portfolios.each do |portfolio|
-#   p "PORTFOLIO: #{portfolio.name} : #{portfolio.portfolio_total_value}"
-#   portfolio.investments.each do |investment|
-#     investment.calculate_desired_value
-#     p "#{investment.symbol} : #{investment.total_value} : #{investment.desired_value}"
-#   end
-# end

@@ -20,10 +20,14 @@ class Portfolio
     end
   end
 
-  def determine_buy_or_sell
-    p "investments" + @investments.to_s
+  def amount_to_buy_or_sell
     @investments.each do |inv|
-      p inv.symbol
+      inv.determine_change_in_shares
+    end
+  end
+
+  def determine_buy_or_sell
+    @investments.each do |inv|
       next if inv.symbol == "MMA"
 
       diff = inv.current_percentage - inv.desired_percentage

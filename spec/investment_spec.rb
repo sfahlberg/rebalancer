@@ -115,4 +115,26 @@ RSpec.describe Investment do
       it "throws an error"
     end
   end
+
+  describe '#determine_change_shares' do
+    context "with valid input data" do
+      it "calculates the amount of shares to sell" do
+        inv = Investment.new("x", "X", 3, 7, 21, 111)
+        inv.desired_value = 28
+        inv.determine_change_in_shares
+        expect(inv.change_shares).to eq(-1)
+      end
+      
+      it "calculates the amount of shares to buy" do
+        inv = Investment.new("x", "X", 3, 7, 35, 111)
+        inv.desired_value = 28
+        inv.determine_change_in_shares
+        expect(inv.change_shares).to eq(1)
+      end
+    end
+
+    context "with invalid input data" do
+      it "throws an error"
+    end
+  end
 end

@@ -1,6 +1,6 @@
 require 'byebug'
 class Investment
-  attr_accessor :name, :symbol, :shares, :share_price, :total_value, :account_number, :current_percentage, :desired_percentage, :desired_value, :portfolio
+  attr_accessor :name, :symbol, :shares, :share_price, :total_value, :account_number, :current_percentage, :desired_percentage, :desired_value, :portfolio, :change_shares
 
   def initialize(name, symbol, shares, share_price, total_value, account_number)
     @name = name
@@ -13,6 +13,11 @@ class Investment
     @desired_percentage = 0
     @account_number = account_number
     @portfolio = nil
+    @change_shares = 0
+  end
+
+  def determine_change_in_shares
+    @change_shares = (@total_value - @desired_value) / @share_price
   end
 
   def complete_data
