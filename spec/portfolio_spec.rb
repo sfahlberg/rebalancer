@@ -34,4 +34,71 @@ RSpec.describe Portfolio do
       it "throws an error"
     end
   end
+
+  describe '#determine_buy_or_sell' do
+    context "with valid input data" do
+      it "returns sell as true" do
+        inv_a = Investment.new("a", "A", 3, 10, 30, 111)
+        inv_a.current_percentage = 75
+        inv_a.desired_percentage = 50
+
+        inv_b = Investment.new("b", "B", 1, 10, 10, 222)
+        inv_b.current_percentage = 25
+        inv_b.desired_percentage = 50
+
+        port = Portfolio.new("x", [], [inv_a, inv_b])
+
+        port.determine_buy_or_sell
+
+        expect(port.buy).to be false
+        expect(port.sell).to be true
+      end
+
+      it "returns buy as true" do
+        inv_a = Investment.new("a", "A", 1, 10, 10, 111)
+        inv_a.current_percentage = 25
+        inv_a.desired_percentage = 50
+
+        inv_b = Investment.new("b", "B", 2, 10, 10, 222)
+        inv_b.current_percentage = 25
+        inv_b.desired_percentage = 50
+
+        inv_mma = Investment.new("mma", "MMA", 20, 1, 20, 333)
+        inv_mma.current_percentage = 50
+        inv_mma.desired_percentage = 0
+
+        port = Portfolio.new("x", [], [inv_a, inv_b, inv_mma])
+
+        port.determine_buy_or_sell
+
+        expect(port.buy).to be true
+        expect(port.sell).to be false
+      end
+
+      it "returns buy and sell as false" do
+        inv_a = Investment.new("a", "A", 1, 47, 47, 111)
+        inv_a.current_percentage = 47
+        inv_a.desired_percentage = 50
+
+        inv_b = Investment.new("b", "B", 1, 47, 47, 222)
+        inv_b.current_percentage = 47
+        inv_b.desired_percentage = 50
+
+        inv_mma = Investment.new("mma", "MMA", 1, 6, 6, 333)
+        inv_mma.current_percentage = 6
+        inv_mma.desired_percentage = 0
+
+        port = Portfolio.new("x", [], [inv_a, inv_b, inv_mma])
+
+        port.determine_buy_or_sell
+
+        expect(port.buy).to be false
+        expect(port.sell).to be false
+      end
+    end
+
+    context "with invalid input data" do
+      it "throws an error"
+    end
+  end
 end
