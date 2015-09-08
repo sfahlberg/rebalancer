@@ -22,7 +22,7 @@ class Portfolio
 
   def amount_to_buy_or_sell
     @investments.each do |inv|
-      inv.determine_change_in_shares
+      inv.determine_change_in_shares({buy: @buy, sell: @sell})
     end
   end
 
@@ -31,7 +31,6 @@ class Portfolio
       next if inv.symbol == "MMA"
 
       diff = inv.current_percentage - inv.desired_percentage
-      p "diff: " + diff.to_s
 
       if diff > @diff_for_action
         @sell = true

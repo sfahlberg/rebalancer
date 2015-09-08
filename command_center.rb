@@ -29,7 +29,7 @@ vanguard.portfolios.each do |portfolio|
 
     portfolio.amount_to_buy_or_sell
     portfolio.investments.each do |inv|
-      p inv.change_shares
+      p "#{inv.symbol} : #{inv.change_shares}"
     end
   end
 end
