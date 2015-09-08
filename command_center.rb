@@ -1,4 +1,4 @@
-# require_relative 'login_and_download'
+require_relative 'login_and_download'
 require_relative 'vanguard_csv'
 require_relative 'user_csv'
 require_relative 'vanguard'

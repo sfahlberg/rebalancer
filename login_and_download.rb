@@ -43,6 +43,8 @@ end
 
 input_username = wait_for_el("USER")
 input_username.send_keys(username)
+password_field = wait_for_el('PASSWORD')
+password_field.send_keys(pw)
 button = wait_for_el('login')
 button.click
 
@@ -60,7 +62,7 @@ answers.keys.each do |answer|
   end
 end
 
-input_challenge = wait_for_el('LoginForm:ANSWER')
+input_challenge = wait_for_el('comp-LoginForm:ANSWER')
 input_challenge.send_keys(current_answer)
 
 public_computer = wait_for_el('_id112')
@@ -71,11 +73,11 @@ button.click
 
 # pw
 
-password_field = wait_for_el('LoginForm:PASSWORD')
-password_field.send_keys(pw)
-
-button = wait_for_el('LoginForm:submitInput')
-button.click
+# password_field = wait_for_el('LoginForm:PASSWORD')
+# password_field.send_keys(pw)
+#
+# button = wait_for_el('LoginForm:submitInput')
+# button.click
 
 # check for special event
 
