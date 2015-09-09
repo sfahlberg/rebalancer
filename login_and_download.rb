@@ -50,7 +50,10 @@ button.click
 
 #challenge
 
-challenge_question = wait_for_el('LoginForm:_id88')
+challenge_question = wait_for_el('LoginForm:summaryTable')
+p challenge_question
+challenge_question = challenge_question.find_element(css: 'tbody tr:nth-of-type(2) td:nth-of-type(2)')
+p challenge_question.text
 
 current_answer = nil
 
@@ -62,13 +65,13 @@ answers.keys.each do |answer|
   end
 end
 
-input_challenge = wait_for_el('comp-LoginForm:ANSWER')
+input_challenge = wait_for_el('LoginForm:ANSWER')
 input_challenge.send_keys(current_answer)
 
-public_computer = wait_for_el('_id112')
+public_computer = wait_for_el('LoginForm:DEVICE:1')
 public_computer.click
 
-button = wait_for_el('LoginForm:continueInput')
+button = wait_for_el('LoginForm:ContinueInput')
 button.click
 
 # pw
