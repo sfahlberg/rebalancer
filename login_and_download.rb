@@ -22,22 +22,28 @@ pw = temp_arr[15]
 @download_dir = File.join(Dir.pwd, 'data')
 FileUtils.mkdir_p @download_dir
 
+if File.file?(@download_dir + '/ofxdownload.csv')
+  FileUtils.mv(@download_dir + '/ofxdownload.csv', @download_dir + '/archive/' + Time.new().to_i.to_s, verbose: true)
+end
+
 profile = Selenium::WebDriver::Firefox::Profile.new
 profile['browser.download.dir'] = @download_dir
 profile['browser.download.folderList'] = 2
-profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/pro_eng, text/csv, application/csv, application/vnd.ms-excel'
+profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/pro_eng, text/csv, application/csv, application/vnd.ms-excel, application/x-ofx'
 # profile['pdfjs.disabled'] = true
 BROWSER = Selenium::WebDriver.for :firefox, profile: profile
 
- # my stuff                 
+# my stuff                 
 
 BROWSER.get 'https://investor.vanguard.com/my-account/log-on'
-WAIT = Selenium::WebDriver::Wait.new(:timeout => 20)
+WAIT = Selenium::WebDriver::Wait.new(:timeout => 30)
 
 def wait_for_el(id_name)
   WAIT.until do
     element = BROWSER.find_element(:id, id_name)
-    element if element.displayed?
+    if element.displayed?
+      element
+    end
   end
 end
 
@@ -51,17 +57,13 @@ button.click
 #challenge
 
 challenge_question = wait_for_el('LoginForm:summaryTable')
-p challenge_question
 challenge_question = challenge_question.find_element(css: 'tbody tr:nth-of-type(2) td:nth-of-type(2)')
-p challenge_question.text
 
 current_answer = nil
 
 answers.keys.each do |answer|
   if answer == challenge_question.text
     current_answer = answers[answer]
-  else
-    puts "unknown challenge question"
   end
 end
 
@@ -74,29 +76,22 @@ public_computer.click
 button = wait_for_el('LoginForm:ContinueInput')
 button.click
 
-# pw
-
-# password_field = wait_for_el('LoginForm:PASSWORD')
-# password_field.send_keys(pw)
-#
-# button = wait_for_el('LoginForm:submitInput')
-# button.click
-
-# check for special event
-
-# if BROWSER.find_element(:id, 'continueInput')
-#   continue = BROWSER.find_element(:id, 'continueInput')
-#   continue.click
-# end
-
-# go to download page
+p 'go to download page'
 BROWSER.get 'https://personal.vanguard.com/us/OfxWelcome'
 
-# select csv
+wait_for_el('vg0')
+# WAIT.until do 
+#   element = BROWSER.find_element(:id, 'vg0')
+#   p element.css_value('display')
+#   element.css_value('display') == 'block'
+# end
+
+p 'select csv'
 dropdown_list = wait_for_el('OfxDownloadForm:downloadOption_main')
 dropdown_list.click
 
-csv_select = wait_for_el('OfxDownloadForm:downloadOption:_id74')
+p 'click other download option'
+csv_select = wait_for_el('OfxDownloadForm:downloadOption:_id75')
 csv_select.click
 
 # check desired accounts
@@ -105,3 +100,6 @@ check.click
 
 download = wait_for_el('OfxDownloadForm:downloadButtonInput')
 download.click
+p 'download successful'
+
+BROWSER.quit

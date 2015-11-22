@@ -22,6 +22,7 @@ class Portfolio
 
   def amount_to_buy_or_sell
     @investments.each do |inv|
+      next if inv.symbol == "MMA"
       inv.determine_change_in_shares({buy: @buy, sell: @sell})
     end
   end

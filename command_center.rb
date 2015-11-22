@@ -18,8 +18,7 @@ vanguard.portfolios.each do |portfolio|
     portfolio.calculate_portfolio_total_value
     portfolio.investments.each do |investment|
       investment.complete_data
-      # p "#{investment.symbol} : #{investment.current_percentage} : #{investment.desired_percentage}"
-      p "#{investment.symbol} : #{investment.total_value} : #{investment.desired_value}"
+      # p "#{investment.symbol} : #{investment.total_value} : #{investment.desired_value}"
     end
 
     portfolio.calculate_portfolio_total_value
