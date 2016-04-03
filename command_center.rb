@@ -14,7 +14,7 @@ portfolios = user_csv.get_portfolios(investments)
 vanguard =  Vanguard.new(portfolios)
 
 vanguard.portfolios.each do |portfolio|
-  if portfolio.name == 'traditional'
+  if portfolio.name == 'traditional' || portfolio.name == 'after-tax'
     portfolio.calculate_portfolio_total_value
     portfolio.investments.each do |investment|
       investment.complete_data
