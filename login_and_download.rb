@@ -91,7 +91,7 @@ dropdown_list = wait_for_el('OfxDownloadForm:downloadOption_main')
 dropdown_list.click
 
 p 'click other download option'
-csv_select = wait_for_el('OfxDownloadForm:downloadOption:_id75')
+csv_select = wait_for_el('OfxDownloadForm:downloadOption:_id74')
 csv_select.click
 
 # check desired accounts
