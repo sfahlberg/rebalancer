@@ -8,6 +8,7 @@ GEM
     ffi (1.9.10)
     fileutils (0.7)
       rmagick (>= 2.13.1)
+    json (1.8.3)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
     rmagick (2.15.4)
@@ -40,6 +41,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   fileutils
+  json
   rspec
   selenium-webdriver
   uuid

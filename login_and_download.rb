@@ -5,23 +5,7 @@ require 'fileutils'
 
 class FetchCSV
 
-  def self.call!
-    temp_arr = []
-    i = 0
-    File.readlines('user_data/info.txt').each do |line, idx|
-      temp_arr[i] = line.gsub!("\n","")
-      i += 1
-    end
-
-    answers = {
-      temp_arr[1] => temp_arr[3],
-      temp_arr[5] => temp_arr[7],
-      temp_arr[9] => temp_arr[11]
-    }
-
-    username = temp_arr[13]
-    pw = temp_arr[15]
-
+  def self.setup_selenium_browser
     @download_dir = File.join(Dir.pwd, 'data')
     FileUtils.mkdir_p @download_dir
 
@@ -36,29 +20,33 @@ class FetchCSV
     # profile['pdfjs.disabled'] = true
     @browser = Selenium::WebDriver.for :firefox, profile: profile
 
-    # my stuff                 
-
     @browser.get 'https://investor.vanguard.com/my-account/log-on'
     @wait = Selenium::WebDriver::Wait.new(:timeout => 30)
+  end
 
+  def self.get_user_credentials
+    credentials_file = File.read('user_data/credentials.json')
+    JSON.parse(credentials_file)
+  end
 
+  def self.fill_out_login_page!(credentials)
     input_username = wait_for_el("USER")
-    input_username.send_keys(username)
+    input_username.send_keys(credentials["username"])
     password_field = wait_for_el('PASSWORD')
-    password_field.send_keys(pw)
+    password_field.send_keys(credentials["password"])
     button = wait_for_el('login')
     button.click
+  end
 
-    #challenge
-
+  def self.fill_out_challenge_page!(credentials)
     challenge_question = wait_for_el('LoginForm:summaryTable')
     challenge_question = challenge_question.find_element(css: 'tbody tr:nth-of-type(2) td:nth-of-type(2)')
 
     current_answer = nil
 
-    answers.keys.each do |answer|
-      if answer == challenge_question.text
-        current_answer = answers[answer]
+    credentials["questions_and_answers"].keys.each do |question|
+      if question == challenge_question.text
+        current_answer = credentials["questions_and_answers"][question]
       end
     end
 
@@ -70,15 +58,12 @@ class FetchCSV
 
     button = wait_for_el('LoginForm:ContinueInput')
     button.click
+  end
 
+  def self.download_csv!
     @browser.get 'https://personal.vanguard.com/us/OfxWelcome'
 
     wait_for_el('vg0')
-    # @wait.until do 
-    #   element = @browser.find_element(:id, 'vg0')
-    #   p element.css_value('display')
-    #   element.css_value('display') == 'block'
-    # end
 
     dropdown_list = wait_for_el('OfxDownloadForm:downloadOption_main')
     dropdown_list.click
@@ -93,8 +78,19 @@ class FetchCSV
     download = wait_for_el('OfxDownloadForm:downloadButtonInput')
     download.click
     p 'download successful'
+  end
 
+  def self.end_selenium_browser!
     @browser.quit
+  end
+
+  def self.call!
+    credentials = get_user_credentials
+    setup_selenium_browser
+    fill_out_login_page!(credentials)
+    fill_out_challenge_page!(credentials)
+    download_csv!
+    end_selenium_browser!
   end
 
   def self.wait_for_el(id_name)
