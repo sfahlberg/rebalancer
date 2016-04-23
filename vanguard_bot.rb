@@ -1,4 +1,4 @@
-require_relative 'login_and_download'
+require_relative 'fetch_vanguard_csv'
 require_relative 'vanguard_csv'
 require_relative 'user_csv'
 require_relative 'vanguard'
@@ -28,17 +28,22 @@ class VanguardBot
   end
 
   def self.display_data_in_terminal(vanguard)
+    p "a"
     vanguard.portfolios.each do |portfolio|
+      p "b"
       if portfolio.name == 'traditional' || portfolio.name == 'after-tax'
         portfolio.calculate_portfolio_total_value
         portfolio.investments.each do |investment|
           investment.complete_data
-          p "#{investment.symbol} : #{investment.total_value} : #{investment.desired_value}"
+          # p "#{investment.symbol} : #{investment.total_value} : #{investment.desired_value}"
         end
+
+        p "c"
 
         portfolio.calculate_portfolio_total_value
         portfolio.determine_buy_or_sell
 
+        p "d"
         if portfolio.sell
           p 'sell'
         elsif portfolio.buy
