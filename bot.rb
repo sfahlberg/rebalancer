@@ -5,7 +5,7 @@ require_relative 'vanguard'
 require 'rubygems'
 require 'byebug'
 
-class VanguardBot
+class Bot 
 
   def self.run
     FetchVanguardCSV.call!
@@ -63,4 +63,4 @@ class VanguardBot
   end
 end
 
-VanguardBot.run
+Bot.run
