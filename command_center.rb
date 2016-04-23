@@ -5,6 +5,7 @@ require_relative 'vanguard'
 require 'rubygems'
 require 'byebug'
 
+FetchCSV.call!
 vanguard_csv = VanguardCSV.new('data/','ofxdownload.csv')
 vanguard_csv.get_accounts
 investments = vanguard_csv.get_investments
