@@ -38,19 +38,6 @@ class VanguardCSV
         @investments << new_investment
       end
     end
-
-    # investments.flatten!
-    # investments.each do |investment|
-    #   name = investment["Investment Name"] || investment["Fund Name"]
-    #   symbol = investment["Symbol"]
-    #   shares = investment["Shares"]
-    #   portfolio = investment["portfolio"]
-    #   share_price = investment["Share Price"]
-    #   total_value = investment["Total Value"]
-    #   new_investment = Investment.new(name, symbol, shares, share_price, total_value, portfolio)
-    #   @investments << new_investment
-    # end
-    @investments
   end
   
   private

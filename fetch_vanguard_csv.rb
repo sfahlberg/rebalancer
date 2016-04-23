@@ -10,7 +10,7 @@ class FetchVanguardCSV
     FileUtils.mkdir_p @download_dir
 
     if File.file?(@download_dir + '/ofxdownload.csv')
-      FileUtils.mv(@download_dir + '/ofxdownload.csv', @download_dir + '/archive/' + Time.new().to_i.to_s, verbose: true)
+      FileUtils.mv(@download_dir + '/ofxdownload.csv', @download_dir + '/archive/' + Time.new().to_i.to_s, verbose: false)
     end
 
     profile = Selenium::WebDriver::Firefox::Profile.new

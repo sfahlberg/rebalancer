@@ -28,31 +28,33 @@ class VanguardBot
   end
 
   def self.display_data_in_terminal(vanguard)
-    p "a"
     vanguard.portfolios.each do |portfolio|
-      p "b"
       if portfolio.name == 'traditional' || portfolio.name == 'after-tax'
+
         portfolio.calculate_portfolio_total_value
+
         portfolio.investments.each do |investment|
           investment.complete_data
           # p "#{investment.symbol} : #{investment.total_value} : #{investment.desired_value}"
         end
 
-        p "c"
-
         portfolio.calculate_portfolio_total_value
+
         portfolio.determine_buy_or_sell
 
-        p "d"
         if portfolio.sell
-          p 'sell'
+          action = 'sell'
         elsif portfolio.buy
-          p 'buy'
+          action = 'buy'
         else
-          p 'hold'
+          action = 'hold'
         end
 
+        p action + " " + portfolio.name + " " + 'portfolio'
+        p 'the following is the amount of shares'
+
         portfolio.amount_to_buy_or_sell
+
         portfolio.investments.each do |inv|
           p "#{inv.symbol} : #{inv.change_shares}"
         end
