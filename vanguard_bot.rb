@@ -8,7 +8,7 @@ require 'byebug'
 class VanguardBot
 
   def self.run
-    FetchCSV.call!
+    FetchVanguardCSV.call!
     investments = get_investments_from_vanguard_csv
     vanguard = compare_vanguard_data_with_desired_portfolio_data(investments)
     display_data_in_terminal(vanguard)

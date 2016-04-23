@@ -3,7 +3,7 @@ require 'selenium-webdriver'
 require 'uuid'
 require 'fileutils'
 
-class FetchCSV
+class FetchVanguardCSV
 
   def self.setup_selenium_browser
     @download_dir = File.join(Dir.pwd, 'data')
