@@ -38,6 +38,7 @@ class VanguardCSV
         @investments << new_investment
       end
     end
+    @investments
   end
   
   private
