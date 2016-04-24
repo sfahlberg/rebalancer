@@ -24,23 +24,19 @@ class Bot
   def self.compare_vanguard_data_with_desired_portfolio_data(investments)
     user_csv = UserCSV.new('user_data/')
     portfolios = user_csv.get_portfolios(investments)
+    portfolios.each do |portfolio|
+      portfolio.investments.each do |investment|
+        investment.complete_data
+      end
+      portfolio.calculate_portfolio_total_value
+      portfolio.determine_buy_or_sell
+    end
     Vanguard.new(portfolios)
   end
 
   def self.display_data_in_terminal(vanguard)
     vanguard.portfolios.each do |portfolio|
       if portfolio.name == 'traditional' || portfolio.name == 'after-tax'
-
-        portfolio.calculate_portfolio_total_value
-
-        portfolio.investments.each do |investment|
-          investment.complete_data
-          # p "#{investment.symbol} : #{investment.total_value} : #{investment.desired_value}"
-        end
-
-        portfolio.calculate_portfolio_total_value
-
-        portfolio.determine_buy_or_sell
 
         if portfolio.sell
           action = 'sell'
