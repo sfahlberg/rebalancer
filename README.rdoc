@@ -1,0 +1,4 @@
+Start by cloning the project to your computer.
+Then type bundle install.
+You must fill out all the samples in the user_data directory and remove '_sample' from the file name.
+Type 'bundle exec rspec' to run the tests.
