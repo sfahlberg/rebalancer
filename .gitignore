@@ -1,7 +1,9 @@
 account_names.txt
 info.txt
 data/
-user_data/
+user_data/credentials.json
+user_data/desired_portfolio.txt
+user_data/portfolio_names.txt
 *.swp
 *.swo
 *.swn
