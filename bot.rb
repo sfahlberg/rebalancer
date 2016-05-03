@@ -15,14 +15,14 @@ class Bot
   end
 
   def self.get_investments_from_vanguard_csv
-    vanguard_csv = VanguardCSV.new('data/','ofxdownload.csv')
+    vanguard_csv = VanguardCSV.new()
     vanguard_csv.get_accounts
     vanguard_csv.get_investments
   end
 
 
   def self.compare_vanguard_data_with_desired_portfolio_data(investments)
-    user_csv = UserCSV.new('user_data/')
+    user_csv = UserCSV.new()
     portfolios = user_csv.get_portfolios(investments)
     portfolios.each do |portfolio|
       portfolio.calculate_portfolio_total_value

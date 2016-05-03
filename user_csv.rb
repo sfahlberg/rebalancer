@@ -3,7 +3,7 @@ require_relative 'portfolio'
 class UserCSV
   attr_reader :path, :desired_portfolios
 
-  def initialize(path)
+  def initialize(path = 'user_data/')
     @path = path 
   end
 

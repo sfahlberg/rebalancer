@@ -6,7 +6,7 @@ class VanguardCSV
   attr_reader :path_to_csv, :sections, :investments
   attr_accessor :funds
 
-  def initialize(path, filename)
+  def initialize(path = 'data/', filename = 'ofxdownload.csv')
     @path_to_data = path
     @filename = filename
     @names = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
