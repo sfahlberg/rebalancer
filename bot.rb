@@ -8,7 +8,7 @@ require 'byebug'
 class Bot 
 
   def self.run
-    FetchVanguardCSV.call!
+    # FetchVanguardCSV.call!
     investments = get_investments_from_vanguard_csv
     vanguard = compare_vanguard_data_with_desired_portfolio_data(investments)
     display_data_in_terminal(vanguard)
@@ -25,11 +25,11 @@ class Bot
     user_csv = UserCSV.new('user_data/')
     portfolios = user_csv.get_portfolios(investments)
     portfolios.each do |portfolio|
+      portfolio.calculate_portfolio_total_value
+      portfolio.determine_buy_or_sell
       portfolio.investments.each do |investment|
         investment.complete_data
       end
-      portfolio.calculate_portfolio_total_value
-      portfolio.determine_buy_or_sell
     end
     Vanguard.new(portfolios)
   end
