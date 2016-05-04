@@ -1,4 +1,5 @@
 require 'csv'
+require 'json'
 require_relative 'portfolio'
 class UserCSV
   attr_reader :path, :desired_portfolios
@@ -22,26 +23,18 @@ class UserCSV
     end
     portfolios
   end
-  
-  def get_desired_portfolios
-    portfolios = {}
-    CSV.foreach(@path + 'desired_portfolio.txt', headers: true) do |line|
-      current_portfolio = line["Portfolio"]
-      current_investment = line["Symbol"]
-      
-      unless portfolios[current_portfolio]
-        portfolios[current_portfolio] = {}
-      end
 
-      unless portfolios[current_portfolio][current_investment]
-        portfolios[current_portfolio][current_investment] = {}
-      end
-     
-      portfolios[current_portfolio][current_investment] = line["Percent"].to_f
-    end 
+  def get_desired_portfolios
+    credentials_file = File.read('spec/test_data/credentials.json')
+    file = JSON.parse(credentials_file)
+    portfolios = Hash.new()
+    file['portfolios'].each do |portfolio|
+      name = portfolio['name']
+      portfolios[name] = portfolio['breakdown']
+    end
     portfolios
   end
-
+  
   def create_portfolios(investments) 
     portfolios = []
     CSV.foreach(@path + 'portfolio_names.txt', headers: true) do |line|
