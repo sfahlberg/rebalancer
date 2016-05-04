@@ -1,4 +1,0 @@
-Portfolio,Symbol,Percent
-traditional,a,33
-traditional,b,33
-traditional,c,34

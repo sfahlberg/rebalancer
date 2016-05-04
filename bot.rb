@@ -1,6 +1,6 @@
 require_relative 'fetch_vanguard_csv'
 require_relative 'vanguard_csv'
-require_relative 'user_csv'
+require_relative 'user_data'
 require_relative 'vanguard'
 require 'rubygems'
 require 'byebug'
@@ -22,8 +22,8 @@ class Bot
 
 
   def self.compare_vanguard_data_with_desired_portfolio_data(investments)
-    user_csv = UserCSV.new()
-    portfolios = user_csv.get_portfolios(investments)
+    user_data = UserData.new()
+    portfolios = user_data.get_portfolios(investments)
     portfolios.each do |portfolio|
       portfolio.calculate_portfolio_total_value
       portfolio.determine_buy_or_sell

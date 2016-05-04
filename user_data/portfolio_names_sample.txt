@@ -1,4 +1,0 @@
-Portfolio Name,Account Number 1,Account Number 2
-portfolio_name_1(eg after-tax),1111111,22222222
-portfolio_name_2(eg roth),1111111,22222222
-portfolio_name_3(eg traditional),1111111,22222222

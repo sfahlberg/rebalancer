@@ -1,8 +1,0 @@
-Portfolio,Symbol,Percent
-portfolio_name_1,stock_symbol_uppercase,percentage_of_portfolio(eg 30)
-portfolio_name_1,stock_symbol_uppercase,percentage_of_portfolio(eg 30)
-portfolio_name_1,stock_symbol_uppercase,percentage_of_portfolio(eg 40)
-portfolio_name_2,stock_symbol_uppercase,percentage_of_portfolio(eg 30)
-portfolio_name_2,stock_symbol_uppercase,percentage_of_portfolio(eg 30)
-portfolio_name_2,stock_symbol_uppercase,percentage_of_portfolio(eg 20)
-portfolio_name_2,stock_symbol_uppercase,percentage_of_portfolio(eg 20)

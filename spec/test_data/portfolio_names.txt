@@ -1,4 +1,0 @@
-Portfolio Name,Account Number 1,Account Number 2
-after-tax,0030-11111111111,22222222
-traditional,0030-33333333333,44444444
-roth,0030-55555555555,66666666
