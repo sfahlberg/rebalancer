@@ -23,13 +23,13 @@ class Bot
 
   def self.compare_vanguard_data_with_desired_portfolio_data(investments)
     user_data = UserData.new()
-    portfolios = user_data.get_portfolios(investments)
+    portfolios = user_data.create_portfolios(investments)
     portfolios.each do |portfolio|
       portfolio.calculate_portfolio_total_value
-      portfolio.determine_buy_or_sell
       portfolio.investments.each do |investment|
         investment.complete_data
       end
+      portfolio.determine_buy_or_sell
     end
     Vanguard.new(portfolios)
   end

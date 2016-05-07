@@ -1,11 +1,13 @@
 {
-  "username": "username_here",
-    "password": "password_here",
-    "questions_and_answers": {
-      "first_question_here": "first_answer_here",
-      "second_question_here": "second_answer_here",
-      "third_question_here": "third_answer_here"
-    },
+  "credentials": {
+    "username": "username_here",
+      "password": "password_here",
+      "security_questions": {
+        "first_question_here": "first_answer_here",
+        "second_question_here": "second_answer_here",
+        "third_question_here": "third_answer_here"
+      }
+  },
     "portfolios": [
     {
       "name": "create_a_name_for_this_portfolio",
