@@ -16,8 +16,7 @@ class FetchVanguardCSV
     profile = Selenium::WebDriver::Firefox::Profile.new
     profile['browser.download.dir'] = @download_dir
     profile['browser.download.folderList'] = 2
-    profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/pro_eng, text/csv, application/csv, application/vnd.ms-excel, application/x-ofx'
-    # profile['pdfjs.disabled'] = true
+    profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/pro_eng, text/csv, application/csv, application/vnd.ms-excel, application/x-ofx, application/xml, text/plain'
     @browser = Selenium::WebDriver.for :firefox, profile: profile
 
     @browser.get 'https://investor.vanguard.com/my-account/log-on'
@@ -25,8 +24,8 @@ class FetchVanguardCSV
   end
 
   def self.get_user_credentials
-    credentials_file = File.read('user_data/credentials.json')
-    JSON.parse(credentials_file)
+    user_data = File.read('user_data/user_data.json')
+    JSON.parse(user_data)['credentials']
   end
 
   def self.fill_out_login_page!(credentials)
@@ -44,9 +43,9 @@ class FetchVanguardCSV
 
     current_answer = nil
 
-    credentials["questions_and_answers"].keys.each do |question|
+    credentials["security_questions"].keys.each do |question|
       if question == challenge_question.text
-        current_answer = credentials["questions_and_answers"][question]
+        current_answer = credentials["security_questions"][question]
       end
     end
 
@@ -68,7 +67,7 @@ class FetchVanguardCSV
     dropdown_list = wait_for_el('OfxDownloadForm:downloadOption_main')
     dropdown_list.click
 
-    csv_select = wait_for_el('OfxDownloadForm:downloadOption:_id74')
+    csv_select = wait_for_el('OfxDownloadForm:downloadOption:_id75')
     csv_select.click
 
     # check desired accounts
@@ -77,6 +76,7 @@ class FetchVanguardCSV
 
     download = wait_for_el('OfxDownloadForm:downloadButtonInput')
     download.click
+
     p 'download successful'
   end
 
