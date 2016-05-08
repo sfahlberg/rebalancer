@@ -4,11 +4,11 @@ class Portfolio
   attr_reader :name, :investments, :account_numbers
   attr_accessor :portfolio_total_value, :sell, :buy
 
-  def initialize(name, account_numbers, investments)
+  def initialize(name, account_numbers, investments, portfolio_total_value)
     @name = name
     @account_numbers = account_numbers
     @investments = investments
-    @portfolio_total_value = 0
+    @portfolio_total_value = portfolio_total_value
     @diff_for_action = 5
     @buy = false
     @sell = false

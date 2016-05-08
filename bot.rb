@@ -8,7 +8,7 @@ require 'byebug'
 class Bot 
 
   def self.run
-    FetchVanguardCSV.call!
+    # FetchVanguardCSV.call!
     investments = get_investments_from_vanguard_csv
     vanguard = compare_vanguard_data_with_desired_portfolio_data(investments)
     display_data_in_terminal(vanguard)
@@ -24,13 +24,6 @@ class Bot
   def self.compare_vanguard_data_with_desired_portfolio_data(investments)
     user_data = UserData.new()
     portfolios = user_data.create_portfolios(investments)
-    portfolios.each do |portfolio|
-      portfolio.calculate_portfolio_total_value
-      portfolio.investments.each do |investment|
-        investment.complete_data
-      end
-      portfolio.determine_buy_or_sell
-    end
     Vanguard.new(portfolios)
   end
 
@@ -46,13 +39,15 @@ class Bot
           action = 'hold'
         end
 
-        p action + " " + portfolio.name + " " + 'portfolio'
-        p 'the following is the amount of shares'
+        puts action + " " + portfolio.name + " " + 'portfolio'
+        puts
 
         portfolio.amount_to_buy_or_sell
 
         portfolio.investments.each do |inv|
-          p "#{inv.symbol} : #{inv.change_shares}"
+          puts "#{inv.symbol} | current: #{inv.current_percentage}% | desired: #{inv.desired_percentage}%"
+          puts action + " #{inv.change_shares} share"
+          puts
         end
       end
     end

@@ -24,17 +24,17 @@ class Investment
   end
 
   def complete_data
-    symbolize_mma
+    # symbolize_mma
     calculate_share_price
     calculate_current_percentage
     calculate_desired_value
   end
 
-  private
+  # private
 
   def symbolize_mma
     if @symbol.nil? && @name == "Vanguard Prime Money Market Fund"
-      @symbol = "MMA"
+      @symbol = "VMMXX"
     end
   end
   
@@ -48,7 +48,7 @@ class Investment
   end
   
   def calculate_current_percentage
-    @current_percentage = @total_value / @portfolio.portfolio_total_value.to_f * 100
+    @current_percentage = (@total_value / @portfolio.portfolio_total_value.to_f * 100).round(2)
   end
 
   def calculate_desired_value
