@@ -19,7 +19,7 @@ class Investment
   def determine_change_in_shares(options)
     change_shares = (@desired_value - @total_value) / @share_price
     if (options[:buy] && change_shares > 0 ) || (options[:sell] && change_shares < 0)
-      @change_shares = change_shares
+      @change_shares = change_shares.round(2)
     end
   end
 
