@@ -6,9 +6,8 @@ require 'rubygems'
 require 'byebug'
 
 class Bot 
-
   def self.run
-    # FetchVanguardCSV.call!
+    FetchVanguardCSV.call!
     investments = get_investments_from_vanguard_csv
     vanguard = compare_vanguard_data_with_desired_portfolio_data(investments)
     display_data_in_terminal(vanguard)
@@ -19,7 +18,6 @@ class Bot
     vanguard_csv.get_accounts
     vanguard_csv.get_investments
   end
-
 
   def self.compare_vanguard_data_with_desired_portfolio_data(investments)
     user_data = UserData.new()
