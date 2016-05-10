@@ -5,6 +5,8 @@ require 'fileutils'
 
 class FetchVanguardCSV
 
+  WAIT = Selenium::WebDriver::Wait.new(:timeout => 10)
+
   def self.setup_selenium_browser
     @download_dir = File.join(Dir.pwd, 'data')
     FileUtils.mkdir_p @download_dir
@@ -20,7 +22,6 @@ class FetchVanguardCSV
     @browser = Selenium::WebDriver.for :firefox, profile: profile
 
     @browser.get 'https://investor.vanguard.com/my-account/log-on'
-    @wait = Selenium::WebDriver::Wait.new(:timeout => 30)
   end
 
   def self.get_user_credentials
@@ -94,11 +95,17 @@ class FetchVanguardCSV
   end
 
   def self.wait_for_el(id_name)
-    @wait.until do
-      element = @browser.find_element(:id, id_name)
-      if element.displayed?
-        element
+    begin 
+      WAIT.until do
+        element = @browser.find_element(:id, id_name)
+        if element.displayed?
+          element
+        end
       end
+    rescue
+      puts 'id name: ' + id_name + ' not found on page'
+      end_selenium_browser!
+      exit
     end
   end
 end
