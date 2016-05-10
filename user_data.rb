@@ -13,21 +13,12 @@ class UserData
     portfolios = []
 
     @portfolios.each do |portfolio|
-
       investments_for_portfolio = get_investments_for_portfolio(investments, portfolio)
-      
       current_portfolio = Portfolio.new(portfolio['name'], portfolio['account-numbers'], investments_for_portfolio)
-
-      set_portfolio_of_investment_equal_to_current_portfolio(current_portfolio)
-
-      current_portfolio.investments.each do |inv|
-        inv.complete_data
-      end
-
-      current_portfolio.determine_buy_or_sell
-
+      calculate_more_data(current_portfolio)
       portfolios << current_portfolio
     end
+
     portfolios
   end
 
@@ -41,10 +32,12 @@ class UserData
       total_portfolio_value
   end
 
-  def set_portfolio_of_investment_equal_to_current_portfolio(portfolio)
+  def calculate_more_data(portfolio)
     portfolio.investments.each do |inv|
       inv.portfolio = portfolio
+      inv.complete_data
     end
+    portfolio.determine_buy_or_sell
   end
 
   def get_investments_for_portfolio(investments, portfolio_data)
