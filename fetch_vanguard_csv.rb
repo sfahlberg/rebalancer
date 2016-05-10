@@ -24,29 +24,24 @@ class FetchVanguardCSV
     @browser.get 'https://investor.vanguard.com/my-account/log-on'
   end
 
-  def self.get_user_credentials
-    user_data = File.read('user_data/user_data.json')
-    JSON.parse(user_data)['credentials']
-  end
-
-  def self.fill_out_login_page!(credentials)
+  def self.fill_out_login_page!
     input_username = wait_for_el("USER")
-    input_username.send_keys(credentials["username"])
+    input_username.send_keys(@user_data.username)
     password_field = wait_for_el('PASSWORD')
-    password_field.send_keys(credentials["password"])
+    password_field.send_keys(@user_data.password)
     button = wait_for_el('login')
     button.click
   end
 
-  def self.fill_out_challenge_page!(credentials)
+  def self.fill_out_challenge_page!
     challenge_question = wait_for_el('LoginForm:summaryTable')
     challenge_question = challenge_question.find_element(css: 'tbody tr:nth-of-type(2) td:nth-of-type(2)')
 
     current_answer = nil
 
-    credentials["security_questions"].keys.each do |question|
+    @user_data.security_questions.keys.each do |question|
       if question == challenge_question.text
-        current_answer = credentials["security_questions"][question]
+        current_answer = @user_data.security_questions[question]
       end
     end
 
@@ -85,11 +80,11 @@ class FetchVanguardCSV
     @browser.quit
   end
 
-  def self.call!
-    credentials = get_user_credentials
+  def self.call!(user_data)
+    @user_data = user_data
     setup_selenium_browser
-    fill_out_login_page!(credentials)
-    fill_out_challenge_page!(credentials)
+    fill_out_login_page!
+    fill_out_challenge_page!
     download_csv!
     end_selenium_browser!
   end

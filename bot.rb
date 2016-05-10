@@ -7,9 +7,10 @@ require 'byebug'
 
 class Bot 
   def self.run
-    FetchVanguardCSV.call!
+    user_data = UserData.new()
+    FetchVanguardCSV.call!(user_data)
     investments = get_investments_from_vanguard_csv
-    vanguard = compare_vanguard_data_with_desired_portfolio_data(investments)
+    vanguard = compare_vanguard_data_with_desired_portfolio_data(investments, user_data)
     display_data_in_terminal(vanguard)
   end
 
@@ -19,8 +20,7 @@ class Bot
     vanguard_csv.get_investments
   end
 
-  def self.compare_vanguard_data_with_desired_portfolio_data(investments)
-    user_data = UserData.new()
+  def self.compare_vanguard_data_with_desired_portfolio_data(investments, user_data)
     portfolios = user_data.create_portfolios(investments)
     Vanguard.new(portfolios)
   end

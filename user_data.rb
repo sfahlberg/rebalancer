@@ -2,7 +2,7 @@ require 'json'
 require_relative 'portfolio'
 
 class UserData
-  attr_reader :path, :desired_portfolios
+  attr_reader :path, :desired_portfolios, :username, :password, :security_questions
 
   def initialize(path = 'user_data/')
     @path = path 
