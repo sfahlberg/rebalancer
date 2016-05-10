@@ -80,8 +80,8 @@ RSpec.describe Investment do
   describe '#calculate_current_percentage' do
     context "with valid input data" do
       it "calculates the current percentage" do
-        portfolio = Portfolio.new("X",[],[])
-        portfolio.instance_eval('@portfolio_total_value=120')
+        portfolio = Portfolio.new("X",[],[], 120)
+        portfolio.instance_eval('') # so syntastic doesn't throw an error
         investment = Investment.new("A","a",3,5,24,23)
         investment.instance_eval('@portfolio=portfolio')
         investment.send(:calculate_current_percentage)
@@ -97,8 +97,8 @@ RSpec.describe Investment do
   describe '#calculate_desired_value' do
     context "with valid input data" do
       it "does something" do
-        portfolio = Portfolio.new("X",[],[])
-        portfolio.instance_eval('@portfolio_total_value=120')
+        portfolio = Portfolio.new("X",[],[],120)
+        portfolio.instance_eval('') # so syntastic doesn't throw an error
         investment = Investment.new("A","a",3,5,24,23)
         investment.instance_eval('@portfolio=portfolio')
         investment.instance_eval('@desired_percentage=25')
