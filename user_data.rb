@@ -31,19 +31,11 @@ class UserData
 
     @portfolios.each do |portfolio|
 
-      account_numbers = {}
-      portfolio['account-numbers'].each do |acct|
-        account_numbers[acct] = true
-      end
-
-      investments_for_accounts = get_investments_for_accounts(investments, portfolio)
+      investments_for_portfolio = get_investments_for_portfolio(investments, portfolio)
       
-      total_portfolio_value = 0
-      investments_for_accounts.each do |inv|
-        total_portfolio_value += inv.total_value
-      end
+      total_portfolio_value = calculate_total_portfolio_value(investments_for_portfolio)
 
-      current_portfolio = Portfolio.new(portfolio['name'], account_numbers.keys, investments_for_accounts, total_portfolio_value)
+      current_portfolio = Portfolio.new(portfolio['name'], portfolio['account-numbers'], investments_for_portfolio, total_portfolio_value)
 
       set_portfolio_of_investment_equal_to_current_portfolio(current_portfolio)
 
@@ -58,14 +50,22 @@ class UserData
     portfolios
   end
 
+  def calculate_total_portfolio_value(investments)
+      total_portfolio_value = 0
+      investments.each do |inv|
+        total_portfolio_value += inv.total_value
+      end
+      total_portfolio_value
+  end
+
   def set_portfolio_of_investment_equal_to_current_portfolio(portfolio)
     portfolio.investments.each do |inv|
       inv.portfolio = portfolio
     end
   end
 
-  def get_investments_for_accounts(investments, portfolio_data)
-    investments_for_accounts = []
+  def get_investments_for_portfolio(investments, portfolio_data)
+    investments_for_portfolio = []
     investments.each do |investment|
       investment.symbolize_mma
       idx = portfolio_data['account-numbers'].index(investment.account_number)
@@ -73,9 +73,9 @@ class UserData
         # set desired percent from user_data
         desired_percent = portfolio_data['breakdown'][investment.symbol]
         investment.desired_percentage = desired_percent
-        investments_for_accounts << investment
+        investments_for_portfolio << investment
       end
     end
-    investments_for_accounts
+    investments_for_portfolio
   end
 end
