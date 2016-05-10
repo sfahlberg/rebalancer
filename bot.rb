@@ -44,7 +44,9 @@ class Bot
 
         portfolio.investments.each do |inv|
           puts "#{inv.symbol} | current: #{inv.current_percentage}% | desired: #{inv.desired_percentage}%"
-          puts action + " #{inv.change_shares} share"
+          unless action == "hold"
+            puts action + " #{inv.change_shares} share"
+          end
           puts
         end
       end
