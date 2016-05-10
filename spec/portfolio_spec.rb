@@ -11,7 +11,7 @@ RSpec.describe Portfolio do
         expect(portfolio.name).to eq("test")
         expect(portfolio.account_numbers).to eq([1,2])
         expect(portfolio.investments).to eq([inv_1, inv_2])
-        expect(portfolio.portfolio_total_value).to eq(53)
+        expect(portfolio.total_value).to eq(53)
       end
     end
 

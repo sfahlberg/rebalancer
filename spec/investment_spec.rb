@@ -82,7 +82,7 @@ RSpec.describe Investment do
     context "with valid input data" do
       it "calculates the current percentage" do
         portfolio = Portfolio.new("X",[],[])
-        portfolio.instance_eval('@portfolio_total_value=120')
+        portfolio.instance_eval('@total_value=120')
         investment = Investment.new("A","a",3,5,24,23)
         investment.instance_eval('@portfolio=portfolio')
         investment.send(:calculate_current_percentage)
@@ -99,7 +99,7 @@ RSpec.describe Investment do
     context "with valid input data" do
       it "does something" do
         portfolio = Portfolio.new("X",[],[])
-        portfolio.instance_eval('@portfolio_total_value=120')
+        portfolio.instance_eval('@total_value=120')
         investment = Investment.new("A","a",3,5,24,23)
         investment.instance_eval('@portfolio=portfolio')
         investment.instance_eval('@desired_percentage=25')
