@@ -16,9 +16,7 @@ class UserData
 
       investments_for_portfolio = get_investments_for_portfolio(investments, portfolio)
       
-      total_portfolio_value = calculate_total_portfolio_value(investments_for_portfolio)
-
-      current_portfolio = Portfolio.new(portfolio['name'], portfolio['account-numbers'], investments_for_portfolio, total_portfolio_value)
+      current_portfolio = Portfolio.new(portfolio['name'], portfolio['account-numbers'], investments_for_portfolio)
 
       set_portfolio_of_investment_equal_to_current_portfolio(current_portfolio)
 

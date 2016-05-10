@@ -24,7 +24,7 @@ RSpec.describe UserData do
         investments = [inv_a, inv_b, inv_c]
 
         output = current_data.create_portfolios(investments)
-        portfolio = Portfolio.new("traditional", ["0030-33333333333", "44444444"], [inv_a, inv_b], 120) 
+        portfolio = Portfolio.new("traditional", ["0030-33333333333", "44444444"], [inv_a, inv_b]) 
 
         expect(output[0].name).to eq(portfolio.name)
         expect(output[0].investments).to eq(portfolio.investments)
