@@ -52,7 +52,7 @@ class UserData
   def get_investments_for_portfolio(investments, portfolio_data)
     investments_for_portfolio = []
     investments.each do |investment|
-      investment.symbolize_mma
+      investment.symbolize_vmmxx
       idx = portfolio_data['account-numbers'].index(investment.account_number)
       if idx
         # set desired percent from user_data

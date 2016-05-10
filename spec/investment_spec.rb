@@ -37,12 +37,12 @@ RSpec.describe Investment do
       it "throws an error"
     end
   end
-  describe '#symbolize_mma' do
+  describe '#symbolize_vmmxx' do
     context "with valid input data" do
-      it "takes MMA and makes symbol MMA" do
+      it "takes money market and makes symbol VMMXX" do
         inv = Investment.new('Vanguard Prime Money Market Fund', nil, 1, 1, 1, 11) 
-        inv.send(:symbolize_mma)
-        expect(inv.symbol).to eq("MMA")
+        inv.send(:symbolize_vmmxx)
+        expect(inv.symbol).to eq("VMMXX")
       end
     end
 
