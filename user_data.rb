@@ -8,23 +8,6 @@ class UserData
     @path = path 
     fetch_user_data_from_json
   end
-
-  def fetch_user_data_from_json
-    credentials_file = File.read(@path + 'user_data.json')
-    file = JSON.parse(credentials_file)
-    set_credentials(file['credentials'])
-    set_portfolios(file['portfolios'])
-  end
-
-  def set_credentials(credentials)
-    @username = credentials['username']
-    @password = credentials['password']
-    @security_questions = credentials['security_questions']
-  end
-
-  def set_portfolios(portfolio_data)
-    @portfolios = portfolio_data
-  end
   
   def create_portfolios(investments) 
     portfolios = []
@@ -49,6 +32,8 @@ class UserData
     end
     portfolios
   end
+
+  private
 
   def calculate_total_portfolio_value(investments)
       total_portfolio_value = 0
@@ -77,5 +62,22 @@ class UserData
       end
     end
     investments_for_portfolio
+  end
+
+  def fetch_user_data_from_json
+    credentials_file = File.read(@path + 'user_data.json')
+    file = JSON.parse(credentials_file)
+    set_credentials(file['credentials'])
+    set_portfolios(file['portfolios'])
+  end
+
+  def set_credentials(credentials)
+    @username = credentials['username']
+    @password = credentials['password']
+    @security_questions = credentials['security_questions']
+  end
+
+  def set_portfolios(portfolio_data)
+    @portfolios = portfolio_data
   end
 end
