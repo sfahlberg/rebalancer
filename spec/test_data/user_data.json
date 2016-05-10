@@ -8,14 +8,15 @@
         "my_question_3": "my_answer_3"
       }
   },
-    "portfolios": {
-      "traditional": {
-        "account-numbers": ["0030-33333333333","44444444"],
-        "breakdown": {
-          "a": 33,
-          "b": 33,
-          "c": 34
-        }
+    "portfolios": [
+    {
+      "name": "traditional",
+      "account-numbers": ["0030-33333333333","44444444"],
+      "breakdown": {
+        "a": 33,
+        "b": 33,
+        "c": 34
       }
     }
+  ]
 }
