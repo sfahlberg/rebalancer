@@ -23,12 +23,8 @@ RSpec.describe Investment do
   describe '#complete_data' do
     context "with valid input data" do
       it "returns expected output" do
-        portfolio = Portfolio.new("X",[],[])
-        portfolio.instance_eval('@portfolio_total_value=120')
         investment = Investment.new("A","a",3,5,24,23)
-        investment.instance_eval('@portfolio=portfolio')
 
-        expect(investment).to receive(:symbolize_mma)
         expect(investment).to receive(:calculate_share_price)
         expect(investment).to receive(:calculate_current_percentage)
         expect(investment).to receive(:calculate_desired_value)

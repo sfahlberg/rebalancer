@@ -1,15 +1,14 @@
 Things yet to do 
 Doing now
+-fix failing tests
 
 High Priority
--add in percentages so I know how it's working
 
 Medium Priority
 -add more tests for user_data.rb
 -add tests for bot.rb
 -add exceptions for fetch_vanguard_data.rb
 -refactor everything
--fix failing tests
 
 Low Priority
 
@@ -18,3 +17,4 @@ Low Priority
 
 Done
 -Display percentage for MMA
+-add in percentages so I know how it's working

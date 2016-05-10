@@ -24,7 +24,6 @@ class Investment
   end
 
   def complete_data
-    # symbolize_mma
     calculate_share_price
     calculate_current_percentage
     calculate_desired_value
