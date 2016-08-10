@@ -5,11 +5,11 @@ class UserData
   attr_reader :path, :desired_portfolios, :username, :password, :security_questions
 
   def initialize(path = 'user_data/')
-    @path = path 
+    @path = path
     fetch_user_data_from_json
   end
-  
-  def create_portfolios(investments) 
+
+  def create_portfolios(investments)
     portfolios = []
 
     @portfolios.each do |portfolio|

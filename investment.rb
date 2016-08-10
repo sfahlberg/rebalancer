@@ -36,7 +36,7 @@ class Investment
       @symbol = "VMMXX"
     end
   end
-  
+
   def calculate_share_price
     calculated_total_value = (@total_value / @shares).to_f
     if @share_price.nil?  || @share_price.to_i != calculated_total_value.to_i
@@ -45,7 +45,7 @@ class Investment
       @share_price = @share_price.to_f
     end
   end
-  
+
   def calculate_current_percentage
     @current_percentage = (@total_value / @portfolio.total_value.to_f * 100).round(2)
   end

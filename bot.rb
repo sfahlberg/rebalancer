@@ -5,7 +5,7 @@ require_relative 'vanguard'
 require 'rubygems'
 require 'byebug'
 
-class Bot 
+class Bot
   def self.run
     user_data = UserData.new()
     FetchVanguardCSV.call!(user_data)
