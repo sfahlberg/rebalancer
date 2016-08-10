@@ -32,7 +32,7 @@ class Investment
   # private
 
   def symbolize_vmmxx
-    if @symbol.nil? && @name == "Vanguard Prime Money Market Fund"
+    if @symbol.nil? && (@name == "Vanguard Prime Money Market Fund" || @name == "CASH")
       @symbol = "VMMXX"
     end
   end
