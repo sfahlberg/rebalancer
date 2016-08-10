@@ -2,17 +2,18 @@ Things yet to do
 Doing now
 
 High Priority
+-improve handling of money market accounts
+-move over to rpi
+-connect with email service or twilio
 
 Medium Priority
 -add tests for bot.rb
 -refactor everything
 -add in tests for failing conditions
--add more tests for user_data.rb 
+-add more tests for user_data.rb
+-figure out way to figure out quickly what needs to change for ui changes at vanguard
 
 Low Priority
-
-
-
 
 Done
 -Display percentage for MMA
