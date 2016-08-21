@@ -19,7 +19,7 @@ class VanguardCSV
     parse_downloaded_csv
     remove_trade_data
 
-    build_helper_csvs 
+    build_helper_csvs
     parse_helper_csvs
   end
 
@@ -28,19 +28,19 @@ class VanguardCSV
       current_investments = @funds[account_number]
 
       current_investments.each do |investment|
-        portfolio = account_number
-        name = investment["Investment Name"] || investment["Fund Name"]
-        symbol = investment["Symbol"]
-        shares = investment["Shares"].to_f
-        share_price = investment["Share Price"]
-        total_value = investment["Total Value"].to_f
-        new_investment = Investment.new(name, symbol, shares, share_price, total_value, portfolio)
-        @investments << new_investment
+        @investments << Investment.new(
+          investment["Investment Name"] || investment["Fund Name"],
+          investment["Symbol"],
+          investment["Shares"],
+          investment["Share Price"],
+          investment["Total Value"],
+          account_number
+        )
       end
     end
     @investments
   end
-  
+
   private
   def build_helper_csvs(dir = 'tmp/')
     @sections.each_with_index do |section, idx|
@@ -79,14 +79,14 @@ class VanguardCSV
 
   def parse_downloaded_csv
     current_section = []
-    
+
     CSV.foreach(@path_to_data + @filename) do |line|
 
       if line.length > 0 && line[0][0].is_letter? && !current_section.empty?
         @sections << current_section
         current_section = []
       end
-      
+
       current_section << line
     end
 
