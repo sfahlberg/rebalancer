@@ -2,7 +2,10 @@ Things yet to do
 Doing now
 
 High Priority
--improve handling of money market accounts
+-right now, it checks whether any account (excluding money markets) has
+a greater difference than @diff_for_action. This is not the desired
+behavior. I want it to check whether the money markets are greater than
+@diff_for_action and then sell.
 -move over to rpi
 -connect with email service or twilio
 
