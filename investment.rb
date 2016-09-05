@@ -5,9 +5,9 @@ class Investment
   def initialize(name, symbol, shares, share_price, total_value, account_number)
     @name = name
     @symbol = symbol
-    @shares = shares
-    @share_price = share_price
-    @total_value = total_value
+    @shares = shares.to_f
+    @share_price = share_price.to_f
+    @total_value = total_value.to_f
     @desired_value = 0
     @current_percentage = 0
     @desired_percentage = 0
