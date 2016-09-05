@@ -8,7 +8,7 @@ require 'byebug'
 class Bot
   def self.run(fetch_new_csv)
     user_data = UserData.new()
-    if fetch_new_csv == "true"
+    if fetch_new_csv[0] == "true"
       FetchVanguardCSV.call!(user_data)
     end
     investments = get_investments_from_vanguard_csv
