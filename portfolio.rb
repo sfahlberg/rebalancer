@@ -23,14 +23,14 @@ class Portfolio
 
   def amount_to_buy_or_sell
     @investments.each do |inv|
-      next if inv.symbol == "MMA"
+      next if inv.symbol == "VMMXX"
       inv.determine_change_in_shares({buy: @buy, sell: @sell})
     end
   end
 
   def determine_buy_or_sell
     @investments.each do |inv|
-      next if inv.symbol == "MMA"
+      next if inv.symbol == "VMMXX"
 
       diff = inv.current_percentage - inv.desired_percentage
 
@@ -42,7 +42,7 @@ class Portfolio
     # if you're not selling, check if you should buy
     if !@sell
       @investments.each do |inv|
-        next if inv.symbol == "MMA"
+        next if inv.symbol == "VMMXX"
 
         diff = inv.current_percentage - inv.desired_percentage
 
