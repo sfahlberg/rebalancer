@@ -30,7 +30,7 @@ class Portfolio
 
   def determine_buy_or_sell
     @investments.each do |inv|
-      next if inv.symbol == "VMMXX"
+      next if inv.symbol == "VMFXX"
 
       diff = inv.current_percentage - inv.desired_percentage
 
@@ -42,7 +42,7 @@ class Portfolio
     # if you're not selling, check if you should buy
     if !@sell
       @investments.each do |inv|
-        next if inv.symbol == "VMMXX"
+        next if inv.symbol == "VMFXX"
 
         diff = inv.current_percentage - inv.desired_percentage
 

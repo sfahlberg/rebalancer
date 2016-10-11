@@ -1,4 +1,5 @@
-require 'byebug'
+require 'rb-readline'
+require 'pry'
 class Investment
   attr_accessor :name, :symbol, :shares, :share_price, :total_value, :account_number, :current_percentage, :desired_percentage, :desired_value, :portfolio, :change_shares
 
@@ -38,9 +39,8 @@ class Investment
   end
 
   def calculate_share_price
-    calculated_total_value = (@total_value / @shares).to_f
-    if @share_price.nil?  || @share_price.to_i != calculated_total_value.to_i
-      @share_price = calculated_total_value
+    if symbol == 'VMFXX'
+      @share_price = 1
     else
       @share_price = @share_price.to_f
     end

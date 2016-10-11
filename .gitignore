@@ -2,6 +2,7 @@ account_names.txt
 info.txt
 data/
 user_data/user_data.json
+user_data/user_data_all_accounts.json
 *.swp
 *.swo
 *.swn
