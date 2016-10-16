@@ -12,6 +12,7 @@ class Portfolio
     @diff_for_action = 5
     @buy = false
     @sell = false
+    @settlement_account_symbol = 'VMFXX'
     calculate_total_value
   end
 
@@ -23,33 +24,35 @@ class Portfolio
 
   def amount_to_buy_or_sell
     @investments.each do |inv|
-      next if inv.symbol == "VMMXX"
+      next if inv.symbol == @settlement_account_symbol
       inv.determine_change_in_shares({buy: @buy, sell: @sell})
     end
   end
 
   def determine_buy_or_sell
-    @investments.each do |inv|
-      next if inv.symbol == "VMFXX"
-
-      diff = inv.current_percentage - inv.desired_percentage
-
-      if diff > @diff_for_action
-        @sell = true
-      end
-    end
-
+    should_sell
     # if you're not selling, check if you should buy
-    if !@sell
-      @investments.each do |inv|
-        next if inv.symbol == "VMFXX"
+    should_buy unless @sell
+  end
 
-        diff = inv.current_percentage - inv.desired_percentage
+  def should_sell
+    # check whether any of the non-settlement investments is over the
+    # @diff_for_action amount if so sell that
+    @investments.each do |inv|
+      next if inv.symbol == @settlement_account_symbol
+      diff = inv.current_percentage - inv.desired_percentage
+      @sell = true if diff > @diff_for_action
+    end
+  end
 
-        if diff < -@diff_for_action
-          @buy = true
-        end
-      end
+  def should_buy
+    @investments.each do |inv|
+      diff = inv.current_percentage - inv.desired_percentage
+      # check whether any settlement account has more the @diff_for_action amount
+      @buy = true if inv.symbol == @settlement_account_symbol && diff > @diff_for_action
+      # check whether non-settlement accoutn investments have less than
+      # the negative @diff_for_action
+      @buy = true if diff < -@diff_for_action
     end
   end
 end
