@@ -104,7 +104,7 @@ RSpec.describe Investment do
     context "with valid input data" do
       it "calculates the amount of shares to sell" do
         inv = Investment.new("x", "X", 3, 7, 21, 111)
-        inv.desired_value = 29
+        inv.desired_value = 28
         inv.determine_change_in_shares({buy: true, sell: false})
         expect(inv.change_shares).to eq(1)
       end
