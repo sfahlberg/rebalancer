@@ -38,36 +38,23 @@ RSpec.describe Investment do
       it "throws an error"
     end
   end
-  describe '#symbolize_vmmxx' do
-    context "with valid input data" do
-      it "takes money market and makes symbol VMMXX" do
-        inv = Investment.new('Vanguard Prime Money Market Fund', nil, 1, 1, 1, 11) 
-        inv.send(:symbolize_vmmxx)
-        expect(inv.symbol).to eq("VMMXX")
-      end
-    end
-
-    context "with invalid input data" do
-      it "throws an error"
-    end
-  end
 
   describe '#calculate_share_price' do
     context "with valid input data" do
       it "calculates share price if nil" do
-        inv = Investment.new('A', 'a', 3, nil, 12, 11) 
+        inv = Investment.new('A', 'a', 3, nil, 12, 11)
         inv.send(:calculate_share_price)
         expect(inv.share_price).to equal(4.0)
       end
 
       it "calculates share price if incorrect" do
-        inv = Investment.new('A', 'a', 3, 5, 12, 11) 
+        inv = Investment.new('A', 'a', 3, 5, 12, 11)
         inv.send(:calculate_share_price)
         expect(inv.share_price).to equal(4.0)
       end
-      
+
       it "calculates float share price" do
-        inv = Investment.new('A', 'a', 3, 4, 12, 11) 
+        inv = Investment.new('A', 'a', 3, 4, 12, 11)
         inv.send(:calculate_share_price)
         expect(inv.share_price).to equal(4.0)
       end
@@ -121,7 +108,7 @@ RSpec.describe Investment do
         inv.determine_change_in_shares({buy: true, sell: false})
         expect(inv.change_shares).to eq(1)
       end
-      
+
       it "calculates the amount of shares to buy" do
         inv = Investment.new("x", "X", 3, 7, 35, 111)
         inv.desired_value = 28
@@ -135,7 +122,7 @@ RSpec.describe Investment do
         inv.determine_change_in_shares({buy: false, sell: true})
         expect(inv.change_shares).to eq(0)
       end
-      
+
       it "change in shares is 0 since the portfolio is in sell mode" do
         inv = Investment.new("x", "X", 3, 7, 35, 111)
         inv.desired_value = 28
