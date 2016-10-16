@@ -48,7 +48,7 @@ RSpec.describe Portfolio do
         inv_b.current_percentage = 25
         inv_b.desired_percentage = 50
 
-        inv_mma = Investment.new("mma", "MMA", 20, 1, 20, 333)
+        inv_mma = Investment.new("mma", "VMFXX", 20, 1, 20, 333)
         inv_mma.current_percentage = 50
         inv_mma.desired_percentage = 0
 
@@ -69,7 +69,7 @@ RSpec.describe Portfolio do
         inv_b.current_percentage = 47
         inv_b.desired_percentage = 50
 
-        inv_mma = Investment.new("mma", "MMA", 1, 6, 6, 333)
+        inv_mma = Investment.new("mma", "VMFXX", 1, 6, 6, 333)
         inv_mma.current_percentage = 6
         inv_mma.desired_percentage = 0
 
