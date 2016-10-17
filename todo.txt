@@ -4,6 +4,8 @@ Doing now
 High Priority
 -move over to rpi
 -connect with email service or twilio
+-add case if you currently don't own an investment, it should still work
+-add case if you don't want an investment, it should sell it
 
 Medium Priority
 -add tests for bot.rb
@@ -11,6 +13,7 @@ Medium Priority
 -add in tests for failing conditions
 -add more tests for user_data.rb
 -figure out way to figure out quickly what needs to change for ui changes at vanguard
+-add test for whether everything equals user data per portfolio is 100%
 
 Low Priority
 
