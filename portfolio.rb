@@ -9,7 +9,7 @@ class Portfolio
     @account_numbers = account_numbers
     @investments = investments
     @total_value = 0
-    @diff_for_action = 5
+    @diff_for_action = 3
     @buy = false
     @sell = false
     @settlement_account_symbol = 'VMFXX'

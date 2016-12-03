@@ -47,7 +47,7 @@ class UserData
       if idx
         # set desired percent from user_data
         desired_percent = portfolio_data['breakdown'][investment.symbol]
-        investment.desired_percentage = desired_percent
+        investment.desired_percentage = desired_percent || 0
         investments_for_portfolio << investment
       end
     end

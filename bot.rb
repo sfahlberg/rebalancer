@@ -29,8 +29,6 @@ class Bot
 
   def self.display_data_in_terminal(vanguard)
     vanguard.portfolios.each do |portfolio|
-      if portfolio.name == 'traditional' || portfolio.name == 'after-tax'
-
         if portfolio.sell
           action = 'sell'
         elsif portfolio.buy
@@ -51,7 +49,6 @@ class Bot
           end
           puts
         end
-      end
     end
   end
 end
