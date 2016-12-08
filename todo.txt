@@ -2,6 +2,7 @@ Things yet to do
 Doing now
 
 High Priority
+-add option so browser stays open until you want to close it
 -move over to rpi
 -connect with email service or twilio
 -add case if you currently don't own an investment, it should still work
