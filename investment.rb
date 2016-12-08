@@ -33,14 +33,7 @@ class Investment
   # private
 
   def calculate_share_price
-    calculated_total_value = (@total_value / @shares).to_f
-    if @share_price.nil?  || @share_price.to_i != calculated_total_value.to_i
-      @share_price = calculated_total_value
-    elsif symbol == 'VMFXX'
-      @share_price = 1
-    else
-      @share_price = @share_price.to_f
-    end
+    @share_price = @share_price.to_f
   end
 
   def calculate_current_percentage
