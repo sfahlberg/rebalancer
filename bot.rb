@@ -6,9 +6,11 @@ require 'rubygems'
 require 'byebug'
 
 class Bot
-  def self.run(fetch_new_csv)
+  def self.run(arguments)
     user_data = UserData.new()
-    if fetch_new_csv[0] == "true"
+    if arguments[0] == "fetch_new_csv" && arguments[1] == "remain_open"
+      FetchVanguardCSV.call!(user_data, false)
+    elsif arguments[0] == "fetch_new_csv"
       FetchVanguardCSV.call!(user_data)
     end
     investments = get_investments_from_vanguard_csv

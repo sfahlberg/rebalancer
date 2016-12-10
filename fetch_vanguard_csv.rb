@@ -80,13 +80,13 @@ class FetchVanguardCSV
     @browser.quit
   end
 
-  def self.call!(user_data)
+  def self.call!(user_data, close_after_download = true)
     @user_data = user_data
     setup_selenium_browser
     fill_out_login_page!
     fill_out_challenge_page!
     download_csv!
-    end_selenium_browser!
+    end_selenium_browser! if close_after_download
   end
 
   def self.wait_for_el(id_name)
