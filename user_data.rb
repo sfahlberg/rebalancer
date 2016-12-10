@@ -42,15 +42,27 @@ class UserData
 
   def get_investments_for_portfolio(csv_investments, portfolio_data)
     investments_for_portfolio = []
+    desired_breakdown = portfolio_data['breakdown']
     csv_investments.each do |csv_investment|
       idx = portfolio_data['account-numbers'].index(csv_investment.account_number)
       if idx
         # set desired percent from user_data
-        desired_percent = portfolio_data['breakdown'][csv_investment.symbol]
+        desired_percent = desired_breakdown.delete(csv_investment.symbol)
+        # if there is no percent desired by user, a zero is put there, so investment will be sold
         csv_investment.desired_percentage = desired_percent || 0
         investments_for_portfolio << csv_investment
       end
     end
+    # TODO: pull in outside data for stock prices to get this working
+    # desired_breakdown.each do |leftover_investment_symbol_not_yet_owned, percent|
+    #   investments_for_portfolio << Investment.new(
+    #     leftover_investment_symbol_not_yet_owned,
+    #     leftover_investment_symbol_not_yet_owned,
+    #     0,
+    #     investment["Share Price"],
+    #     0
+    #   )
+    # end
     investments_for_portfolio
   end
 

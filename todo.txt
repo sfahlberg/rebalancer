@@ -1,10 +1,12 @@
 Things yet to do
 Doing now
+-add case if you currently don't own an investment, it should still work
+this will involve connecting to an external api that will provide prices
+for assets
 
 High Priority
 -move over to rpi
 -connect with email service or twilio
--add case if you currently don't own an investment, it should still work
 
 Medium Priority
 -add tests for bot.rb
