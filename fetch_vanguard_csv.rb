@@ -93,9 +93,7 @@ class FetchVanguardCSV
     begin
       WAIT.until do
         element = @browser.find_element(:id, id_name)
-        if element.displayed?
-          element
-        end
+        element if element.displayed?
       end
     rescue
       puts 'id name: ' + id_name + ' not found on page'

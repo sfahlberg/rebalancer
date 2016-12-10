@@ -15,6 +15,7 @@ Medium Priority
 -add test for whether everything equals user data per portfolio is 100%
 
 Low Priority
+-fix rubocop errors
 
 Done
 -add option so browser stays open until you want to close it

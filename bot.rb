@@ -13,8 +13,8 @@ class Bot
     elsif arguments[0] == "fetch_new_csv"
       FetchVanguardCSV.call!(user_data)
     end
-    investments = get_investments_from_vanguard_csv
-    vanguard = compare_vanguard_data_with_desired_portfolio_data(investments, user_data)
+    csv_investments = get_investments_from_vanguard_csv
+    vanguard = compare_vanguard_data_with_desired_portfolio_data(csv_investments, user_data)
     display_data_in_terminal(vanguard)
   end
 
@@ -24,8 +24,8 @@ class Bot
     vanguard_csv.get_investments
   end
 
-  def self.compare_vanguard_data_with_desired_portfolio_data(investments, user_data)
-    portfolios = user_data.create_portfolios(investments)
+  def self.compare_vanguard_data_with_desired_portfolio_data(csv_investments, user_data)
+    portfolios = user_data.create_portfolios(csv_investments)
     Vanguard.new(portfolios)
   end
 
