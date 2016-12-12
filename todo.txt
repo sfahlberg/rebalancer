@@ -9,6 +9,7 @@ High Priority
 -connect with email service or twilio
 -integrate with google calendar so that I will create an event to buy or
 sell later on
+-when a line in ofxdownload looks like this `#####,CASH,,12652.10,1.00,12652.10,` you should say that investments are still clearing
 
 Medium Priority
 -add tests for bot.rb
