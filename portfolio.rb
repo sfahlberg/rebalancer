@@ -25,7 +25,7 @@ class Portfolio
   def amount_to_buy_or_sell
     @investments.each do |inv|
       next if inv.symbol == @settlement_account_symbol
-      inv.determine_change_in_shares({buy: @buy, sell: @sell})
+      inv.determine_change_in_shares(buy: @buy, sell: @sell)
     end
   end
 
@@ -48,8 +48,10 @@ class Portfolio
   def should_buy
     @investments.each do |inv|
       diff = inv.current_percentage - inv.desired_percentage
-      # check whether any settlement account has more the @diff_for_action amount
-      @buy = true if inv.symbol == @settlement_account_symbol && diff > @diff_for_action
+      # check whether a settlement account has more the @diff_for_action amount
+      if inv.symbol == @settlement_account_symbol && diff > @diff_for_action
+        @buy = true
+      end
       # check whether non-settlement accoutn investments have less than
       # the negative @diff_for_action
       @buy = true if diff < -@diff_for_action
