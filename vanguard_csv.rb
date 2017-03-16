@@ -9,7 +9,6 @@ class VanguardCSV
   def initialize(path = 'data/', filename = 'ofxdownload.csv')
     @path_to_data = path
     @filename = filename
-    @names = ["Fund Account Number", "Account Number", "Account Number", "Account Number"]
     @sections = []
     @funds = {}
     @investments = []
@@ -29,11 +28,11 @@ class VanguardCSV
 
       current_investments.each do |investment|
         @investments << Investment.new(
-          investment["Investment Name"] || investment["Fund Name"],
-          investment["Symbol"],
-          investment["Shares"],
-          investment["Share Price"],
-          investment["Total Value"],
+          investment['Investment Name'] || investment['Fund Name'],
+          investment['Symbol'],
+          investment['Shares'],
+          investment['Share Price'],
+          investment['Total Value'],
           account_number
         )
       end
@@ -44,7 +43,7 @@ class VanguardCSV
   private
   def build_helper_csvs(dir = 'tmp/')
     @sections.each_with_index do |section, idx|
-      path = @path_to_data + dir + idx.to_s + ".csv"
+      path = @path_to_data + dir + idx.to_s + '.csv'
       CSV.open(path, 'w') do |csv_object|
         section.each do |row|
           next if row.empty?
@@ -56,19 +55,16 @@ class VanguardCSV
 
   def parse_helper_csvs(dir = 'tmp/')
     @sections.each_index do |idx|
-      path = @path_to_data + dir + idx.to_s + ".csv"
-      identifier = @names[idx]
+      path = @path_to_data + dir + idx.to_s + '.csv'
 
       CSV.foreach(path, headers: true) do |line|
-        account = line[identifier]
-        next if account == nil
+        account = line['Account Number']
+        next if account.nil?
         current_account = {}
 
         line.headers.each_with_index do |header, i|
-          next if header == nil
-          unless identifier == header
-            current_account[header] = line[i]
-          end
+          next if header.nil?
+          current_account[header] = line[i] unless 'Account Number' == header
         end
 
         @funds[account] ||= []
@@ -81,8 +77,7 @@ class VanguardCSV
     current_section = []
 
     CSV.foreach(@path_to_data + @filename) do |line|
-
-      if line.length > 0 && line[0][0].is_letter? && !current_section.empty?
+      if !line.empty? && line[0][0].is_letter? && !current_section.empty?
         @sections << current_section
         current_section = []
       end
@@ -96,9 +91,7 @@ class VanguardCSV
   def remove_trade_data
     cleaned_sections = []
     @sections.each do |section|
-      if section[0][1] != "Trade Date"
-        cleaned_sections << section
-      end
+      cleaned_sections << section if section[0][1] != 'Trade Date'
     end
     @sections = cleaned_sections
   end
