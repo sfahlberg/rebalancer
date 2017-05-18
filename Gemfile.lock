@@ -1,16 +1,27 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    byebug (8.2.5)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     diff-lcs (1.2.5)
     ffi (1.9.10)
     fileutils (0.7)
       rmagick (>= 2.13.1)
+    gmail (0.6.0)
+      gmail_xoauth (>= 0.3.0)
+      mail (>= 2.2.1)
+    gmail_xoauth (0.4.2)
+      oauth (>= 0.3.6)
     json (1.8.3)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
+    mail (2.6.5)
+      mime-types (>= 1.16, < 4)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
+    oauth (0.5.2)
+    rb-readline (0.5.4)
     rmagick (2.15.4)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -39,12 +50,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
   fileutils
+  gmail
   json
+  rb-readline
   rspec
   selenium-webdriver
   uuid
 
 BUNDLED WITH
-   1.12.0
+   1.14.6

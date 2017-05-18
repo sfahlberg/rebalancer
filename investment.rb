@@ -1,5 +1,5 @@
 require 'rb-readline'
-require 'pry'
+
 class Investment
   attr_accessor :name, :symbol, :shares, :share_price, :total_value, :account_number, :current_percentage, :desired_percentage, :desired_value, :portfolio, :change_shares
 

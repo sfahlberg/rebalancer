@@ -2,7 +2,7 @@ require 'json'
 require_relative 'portfolio'
 
 class UserData
-  attr_reader :path, :desired_portfolios, :username, :password, :security_questions
+  attr_reader :path, :desired_portfolios, :username, :password, :security_questions, :email, :email_password
 
   def initialize(path = 'user_data/')
     @path = path
@@ -77,6 +77,8 @@ class UserData
     @username = credentials['username']
     @password = credentials['password']
     @security_questions = credentials['security_questions']
+    @email = credentials['email']
+    @email_password = credentials['email-password']
   end
 
   def set_portfolios(portfolio_data)
