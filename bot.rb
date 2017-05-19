@@ -9,20 +9,20 @@ require 'pry'
 
 class Bot
   def self.run(arguments)
-    user_data = UserData.new()
-    if arguments[0] == "fetch_new_csv" && arguments[1] == "remain_open"
+    user_data = UserData.new
+    if arguments[0] == 'fetch_new_csv' && arguments[1] == 'remain_open'
       FetchVanguardCSV.call!(user_data, false)
-    elsif arguments[0] == "fetch_new_csv"
+    elsif arguments[0] == 'fetch_new_csv'
       FetchVanguardCSV.call!(user_data)
     end
-    csv_investments = get_investments_from_vanguard_csv
+    csv_investments = investments_from_vanguard_csv
     vanguard = compare_vanguard_data_with_desired_portfolio_data(csv_investments, user_data)
-    display_data_in_terminal(vanguard)
-    send_email(user_data)
+    final_data = final_data(vanguard)
+    send_email(user_data, final_data)
   end
 
-  def self.get_investments_from_vanguard_csv
-    vanguard_csv = VanguardCSV.new()
+  def self.investments_from_vanguard_csv
+    vanguard_csv = VanguardCSV.new
     vanguard_csv.get_accounts
     vanguard_csv.get_investments
   end
@@ -32,45 +32,41 @@ class Bot
     Vanguard.new(portfolios)
   end
 
-  def self.send_email(user_data)
+  def self.send_email(user_data, final_data)
     gmail = Gmail.new(user_data.email, user_data.email_password)
     gmail.deliver do
       to 'test@gmail.com'
-      subject 'test'
+      subject 'Vanguard Report'
       text_part do
-        body 'Text of plaintext message.'
-      end
-      html_part do
-        content_type 'text/html; charset=UTF-8'
-        body '<p>Text of <em>html</em> message.</p>'
+        body final_data
       end
     end
     gmail.logout
   end
 
-  def self.display_data_in_terminal(vanguard)
+  def self.final_data(vanguard)
+    text = ''
     vanguard.portfolios.each do |portfolio|
+      action = 'hold'
       if portfolio.sell
         action = 'sell'
       elsif portfolio.buy
         action = 'buy'
-      else
-        action = 'hold'
       end
 
-      puts action + " " + portfolio.name + " " + 'portfolio'
-      puts
+      text += "#{action} #{portfolio.name} portfolio \n \n"
 
       portfolio.amount_to_buy_or_sell
 
       portfolio.investments.each do |inv|
-        puts "#{inv.symbol} | current: #{inv.current_percentage}% | desired: #{inv.desired_percentage}%"
-        unless action == "hold"
-          puts action + " #{inv.change_shares} share"
-        end
-        puts
+        text += "#{inv.symbol} |"
+        text += " current: #{inv.current_percentage}% |"
+        text += " desired: #{inv.desired_percentage}% \n"
+        text += "action #{inv.change_shares} share \n" unless action == 'hold'
       end
+      text += "\n"
     end
+    text
   end
 end
 
