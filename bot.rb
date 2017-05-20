@@ -17,8 +17,13 @@ class Bot
     end
     csv_investments = investments_from_vanguard_csv
     vanguard = compare_vanguard_data_with_desired_portfolio_data(csv_investments, user_data)
+    vanguard.portfolios.each(&:amount_to_buy_or_sell)
     final_data = final_data(vanguard)
-    send_email(user_data, final_data)
+    if arguments[2] == 'send_email'
+      send_email(user_data, final_data)
+    else
+      puts final_data
+    end
   end
 
   def self.investments_from_vanguard_csv
@@ -55,8 +60,6 @@ class Bot
       end
 
       text += "#{action} #{portfolio.name} portfolio \n \n"
-
-      portfolio.amount_to_buy_or_sell
 
       portfolio.investments.each do |inv|
         text += "#{inv.symbol} |"
