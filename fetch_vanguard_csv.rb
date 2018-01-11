@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'selenium-webdriver'
-require 'uuid'
 require 'fileutils'
 
 class FetchVanguardCSV
