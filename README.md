@@ -10,9 +10,10 @@ what you should buy or sell to bring your investment portfolio back in line. It 
 not buy or sell your investments automatically. I wasn't comfortable letting a program
 do that for me.
 
+Make sure you have version [Firefox version 46.0.01](https://ftp.mozilla.org/pub/firefox/releases/46.0.1/mac/en-US/) for use with selenium
 Start by cloning the project to your computer.
 Then type bundle install.
 You must fill out all the samples in the user_data directory and remove `_sample` from the file name.
 You must add the `tmp` and `archive` directories to the `data` directory
-To run, type ruby bot.rb.
+To run, type `bundle exec ruby bot.rb fetch_new_csv remain_open`
 Type 'bundle exec rspec' to run the tests.
