@@ -62,7 +62,7 @@ class FetchVanguardCSV
     dropdown_list = wait_for_el('OfxDownloadForm:downloadOption_main')
     dropdown_list.click
 
-    csv_select = wait_for_el('OfxDownloadForm:downloadOption:_id75')
+    csv_select = wait_for_el("//td[@value='CSVFile']", :xpath)
     csv_select.click
 
     # check desired accounts
@@ -88,14 +88,14 @@ class FetchVanguardCSV
     end_selenium_browser! if close_after_download
   end
 
-  def self.wait_for_el(id_name)
+  def self.wait_for_el(element_selector, type = :id)
     begin
       WAIT.until do
-        element = @browser.find_element(:id, id_name)
+        element = @browser.find_element(type, element_selector)
         element if element.displayed?
       end
     rescue
-      puts 'id name: ' + id_name + ' not found on page'
+      puts 'element name: ' + element_selector + ' not found on page'
       end_selenium_browser!
       exit
     end
